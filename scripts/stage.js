@@ -1,16 +1,38 @@
-/**
- * Draws the game stage
- * @param {Element} parentElement 
- */
-function renderStage (parentElement) {
+app.stage = {
 
-    var stageElement = document.createElement('main');
+    /**
+     * The stage element
+     * @type Element
+     */
+    element: null,
 
-    stageElement.classList.add('stage');
-    
-    stageElement.style.width = "300px";
-    stageElement.style.height = "300px";
+    /**
+     * The stage width
+     * @type Number
+     */
+    width: 300,
 
-    parentElement.appendChild(stageElement);
+    /**
+     * The stage height
+     * @type Number
+     */
+    height: 300,
 
-}
+    /**
+     * Draws the game stage
+     * @param {Element} parentElement 
+     */
+    render: function (parentElement) {
+
+        this.element = document.createElement('main');
+
+        this.element.classList.add('stage');
+        
+        this.element.style.width    = this.width  + "px";
+        this.element.style.height   = this.height + "px";
+
+        parentElement.appendChild(this.element);
+
+    }
+
+};

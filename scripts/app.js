@@ -1,19 +1,20 @@
 /**
  * Starts the game
  */
-function init () {
+app.init = function () {
+    
+    app.stage.render(document.body);
+    app.player.render(app.stage.element);
 
-    renderStage(document.body);
-
-}
+};
 
 /**
  * Called upon DOM Ready. Initializes the app.
  */
-function onReady () {
+app.onReady = function () {
+    
+    document.addEventListener('DOMContentLoaded', this.init, false);
 
-    document.addEventListener('DOMContentLoaded', init, false);
+};
 
-}
-
-onReady();
+app.onReady();
