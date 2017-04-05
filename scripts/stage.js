@@ -1,38 +1,43 @@
-app.stage = {
+(function () {
 
-    /**
-     * The stage element
-     * @type Element
-     */
-    element: null,
+    app.stage = {
 
-    /**
-     * The stage width
-     * @type Number
-     */
-    width: 300,
+        /**
+         * The stage element
+         * @type Element
+         */
+        element: null,
 
-    /**
-     * The stage height
-     * @type Number
-     */
-    height: 300,
+        /**
+         * The stage width
+         * @type Number
+         */
+        width: 300,
 
-    /**
-     * Draws the game stage
-     * @param {Element} parentElement 
-     */
-    render: function (parentElement) {
+        /**
+         * The stage height
+         * @type Number
+         */
+        height: 300,
 
-        this.element = document.createElement('main');
+        /**
+         * Draws the game stage
+         * @param {Element} parentElement 
+         */
+        render: function (parentElement) {
 
-        this.element.classList.add('stage');
-        
-        this.element.style.width    = this.width  + "px";
-        this.element.style.height   = this.height + "px";
+            this.element = document.createElement('main');
 
-        parentElement.appendChild(this.element);
+            this.element.classList.add('stage');
+            
+            this.element.style.width    = this.width  + "px";
+            this.element.style.height   = this.height + "px";
 
-    }
+            parentElement.appendChild(this.element);
 
-};
+        }
+
+    };
+    
+})();
+    

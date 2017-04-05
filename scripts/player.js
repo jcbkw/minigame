@@ -1,53 +1,180 @@
-app.player = {
+(function () {
 
-    /**
-     * The player element
-     * @type Element
-     */
-    element: null,
+    app.player = {
 
-    /**
-     * The player width
-     * @type Number
-     */
-    width: 25,
+        /**
+         * Enumeration of the different directions that
+         * the player can step towards.
+         * 
+         * @type Object
+         */
+        direction: {
 
-    /**
-     * The player height
-     * @type Number
-     */
-    height: 25,
+            UP      : 'up',
+            DOWN    : 'down',
+            LEFT    : 'left',
+            RIGHT   : 'right',
 
-    /**
-     * Horizontal position of the player on the stage.
-     * @type Number  
-     */
-    x: 10, 
-    
-    /**
-     * Vertical position of the player on the stage.  
-     * @type Number
-     */
-    y: 20, 
+        },
 
-    /**
-     * Draws the game player
-     * @param {Element} parentElement 
-     */
-    render: function (parentElement) {
+        /**
+         * The player element
+         * @type Element
+         */
+        element: null,
+
+        /**
+         * The player width
+         * @type Number
+         */
+        width: 25,
+
+        /**
+         * The player height
+         * @type Number
+         */
+        height: 25,
+
+        /**
+         * Horizontal position of the player on the stage.
+         * @type Number  
+         */
+        x: 0, 
         
-        var playerElement = document.createElement('div');
+        /**
+         * Vertical position of the player on the stage.  
+         * @type Number
+         */
+        y: 0, 
 
-        playerElement.classList.add('player');
-        
-        playerElement.style.width = this.width + "px";
-        playerElement.style.height = this.height + "px";
-        
-        playerElement.style.top = this.y + "px";
-        playerElement.style.left = this.x + "px";
+        /**
+         * Step size of the player on the stage.  
+         * @type Number
+         */
+        stepSize: 1,
 
-        parentElement.appendChild(playerElement);
+        /**
+         * Initializes the player
+         */
+        init: function () {
+
+            app.onTick(animate);
+
+        },
+
+        /**
+         * Draws the game player
+         * @param {Element} parentElement 
+         */
+        render: function (parentElement) {
+            
+            this.element = document.createElement('div');
+
+            this.element.classList.add('player');
+            
+            this.element.style.width  = this.width  + "px";
+            this.element.style.height = this.height + "px";
+
+            parentElement.appendChild(this.element);
+
+        },
+
+        /**
+         * Makes the player step in the provided direction.
+         * 
+         * @param String direction  The desired direction. Can be either
+         *                          up, down, left, right 
+         */
+        step: function (direction) {
+
+            switch (direction) {
+
+                case this.direction.UP   : this.move(0, -this.stepSize); break;
+                case this.direction.DOWN : this.move(0, this.stepSize);  break;
+                case this.direction.LEFT : this.move(-this.stepSize);    break;
+                case this.direction.RIGHT: this.move(this.stepSize);     break;
+
+            }  
+            
+        },
+
+        /**
+         * Moves the player relative to its current position.
+         * 
+         * @param Number [x=0] The relative x coordinate. 
+         * @param Number [y=0] The relativ y coordinate. 
+         */
+        move: function (x, y) {
+            
+            this.moveTo(this.x + (x || 0), this.y + (y || 0));
+
+        },
+
+        /**
+         * Moves the player to the specified position.
+         * 
+         * @param Number x The x coordinate. 
+         * @param Number y The y coordinate. 
+         */
+        moveTo : function (x, y) {
+
+            var maxRight,
+                maxDown;
+            
+            // prevents from going out of bounds up or down
+            if (y < 0) {
+
+                y = 0;
+
+            }
+            else {
+
+                maxDown = app.stage.height - this.height;
+
+                if (y > maxDown) {
+
+                    y = maxDown;
+
+                }
+
+            }
+
+            // prevents from going out of bounds left or right
+            if (x < 0) {
+
+                x = 0;
+
+            }
+            else {
+
+                maxRight = app.stage.width - this.width;
+
+                if (x > maxRight) {
+
+                    x = maxRight;
+
+                }
+
+            }
+
+            this.element.style.top  = y + "px";
+            this.element.style.left = x + "px";
+
+            this.x = x;
+            this.y = y;
+
+        }
 
     }
 
-}
+    function animate () {
+
+        if (app.joystick.direction !== null) {
+
+            app.player.step(app.joystick.direction);
+
+        }
+
+    }
+
+})();
