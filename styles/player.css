@@ -3,7 +3,6 @@
     position: absolute;
     background-color: transparent;
     background-repeat: no-repeat;
-    animation-fill-mode: forwards;
 
 }
 
@@ -19,53 +18,62 @@
 
 }
 
-.player.walking.down {
+.player[stance=down] {
 
     animation-name: walkdown;
+    background-position-x: 0px;
 
 }
 
-.player.walking.left {
+.player[stance=left] {
 
     animation-name: walkleft;
+    background-position: 0px -32px;
 
 }
 
-.player.walking.right {
+.player[stance=right] {
 
     animation-name: walkright;
+    background-position: 0px -64px
 
 }
 
-.player.walking.up {
+.player[stance=up] {
 
     animation-name: walkup;
+    background-position: 0px -96px;
 
 }
 
-.player.walking.left.up {
+.player[stance=leftup] {
 
     animation-name: walkleftup;
+    background-position: -96px -32px;
 
 }
 
-.player.walking.left.down {
+.player[stance=leftdown] {
 
     animation-name: walkleftdown;
+    background-position: -96px 0px;
 
 }
 
-.player.walking.right.up {
+.player[stance=rightup] {
 
     animation-name: walkrightup;
+    background-position: -96px -96px;
 
 }
 
-.player.walking.right.down {
+.player[stance=rightdown] {
 
     animation-name: walkrightdown;
+    background-position: -96px -64px;
 
 }
+
 @keyframes walkdown {
 
     from { background-position-x:   0px; }
@@ -83,7 +91,7 @@
 @keyframes walkup {
 
     from { background-position:   0px -96px; }
-      to { background-position: -96px  -96px; }
+      to { background-position: -96px -96px; }
    
 
 }
@@ -118,7 +126,7 @@
 
 @keyframes walkrightdown {
 
-   from { background-position:   -96px -64px; }
-      to { background-position: -192px -64px; }
+   from { background-position:  -96px -64px; }
+     to { background-position: -192px -64px; }
 
 }

@@ -20,7 +20,7 @@
     app.joystick = {
 
         /**
-         * Initializes the jostick
+         * Initializes the joystick
          */
         init: function () {
 
@@ -35,12 +35,21 @@
          * 
          * @type String[]
          */
-        direction: [],
+        directions: [],
+
+        /**
+         * The maximum number of directional buttons
+         * that can be recorded in the app.joystic.direction
+         * array.
+         * 
+         * @type Number
+         */
+        maxDirections: 2
 
     };
 
     /**
-     * Updates the app.joystick.direction array on keydown
+     * Updates the app.joystick.directions array on keydown
      * to add the newly pressed direction.
      * 
      * @private
@@ -82,7 +91,7 @@
     }
 
     /**
-     * Updates the app.joystick.direction array on keydown
+     * Updates the app.joystick.directions array on keydown
      * to remove the newly released direction.
      * 
      * @private
@@ -122,7 +131,7 @@
     }
 
     /**
-     * Adds the provided direction to the app.joystick.direction
+     * Adds the provided direction to the app.joystick.directions
      * array if the provided direction didn't already figure in 
      * the array.
      * 
@@ -132,16 +141,17 @@
      */
     function addDirection (direction) {
 
-        if (app.joystick.direction.indexOf(direction) === -1) {
+        if (app.joystick.directions.indexOf(direction) === -1 
+        &&  app.joystick.directions.length < app.joystick.maxDirections) {
 
-            app.joystick.direction.push(direction);
+            app.joystick.directions.push(direction);
 
         }
 
     }
 
     /**
-     * Removes the provided direction from the app.joystick.direction
+     * Removes the provided direction from the app.joystick.directions
      * array if the provided direction figured in the array.
      * 
      * @private
@@ -150,11 +160,11 @@
      */
     function removeDirection (direction) {
 
-        var index = app.joystick.direction.indexOf(direction);
+        var index = app.joystick.directions.indexOf(direction);
 
         if (index !== -1) {
 
-            app.joystick.direction.splice(index, 1);
+            app.joystick.directions.splice(index, 1);
 
         }
 

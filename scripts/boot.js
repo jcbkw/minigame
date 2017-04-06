@@ -5,3 +5,18 @@
  * @type Object
  */
 var app = {};
+
+/**
+ * Contains the application constructors.
+ * 
+ * @type Object
+ */
+app.blueprints = {};
+
+
+/**
+ * Contains the Weapon constructors.
+ * 
+ * @type Object
+ */
+app.blueprints.weapons = {};

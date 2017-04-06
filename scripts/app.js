@@ -10,9 +10,40 @@
     app.paused = false;
 
     /**
-     * Starts the game
+     * Calls the provided callback function on each tick.
+     * 
+     * @param Function callback The function to be called.
      */
-    app.init = function () {
+    app.onTick = function (callback) {
+
+        queuedForTick.push(callback);
+
+    };
+
+    /**
+     * Removes the provided callback function from the tick queue.
+     * 
+     * @param Function callback The function to be removed from the tick queue.
+     */
+    app.unTick = function (callback) {
+
+        var index = queuedForTick.indexOf(callback);
+
+        if (index !== -1) {
+
+            queuedForTick.splice(index, 1);
+
+        }
+
+    };
+
+    /**
+     * Initializes the main objects and
+     * starts the game.
+     * 
+     * @private
+     */
+    function init () {
         
         app.stage.render(document.body);
         app.player.render(app.stage.element);
@@ -25,22 +56,14 @@
     };
 
     /**
-     * Called upon DOM Ready. Initializes the app.
-     */
-    app.onReady = function () {
-        
-        document.addEventListener('DOMContentLoaded', this.init, false);
-
-    };
-
-    /**
-     * Calls the provided callback function on each tick.
+     * Called upon DOM Ready in order to
+     * initializes the app.
      * 
-     * @param Function callback The function to be called.
+     * @private
      */
-    app.onTick = function (callback) {
-
-        queuedForTick.push(callback);
+    function onReady () {
+        
+        document.addEventListener('DOMContentLoaded', init, false);
 
     };
 
@@ -54,9 +77,11 @@
 
         if (!app.paused) {
 
-            for (var i = 0, count = queuedForTick.length; i < count; i += 1) {
+            for (var i = 0, count = queuedForTick.length, fn; i < count; i += 1) {
 
-                queuedForTick[i]();
+                fn = queuedForTick[i];
+
+                fn && fn();
 
             }
 
@@ -64,6 +89,7 @@
 
     }
 
-    app.onReady();
+    // begin
+    onReady();
 
 })();
