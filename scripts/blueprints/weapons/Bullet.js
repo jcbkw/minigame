@@ -1,9 +1,15 @@
 (function () {
 
+    /**
+     * @class A Bullet class.
+     * 
+     * @param {Weapon} weapon 
+     */
     function Bullet (weapon) {
 
         this.weapon     = weapon;
         this.element    = null;
+        this.tickFn     = null;
         this.speed      = 5;
         this.height     = 5;
         this.width      = 5;
@@ -12,6 +18,9 @@
 
     }
 
+    /**
+     * Fires this bullet accross the stage.
+     */
     Bullet.prototype.fire = function () {
 
         var player      = this.weapon.getPlayer(),
@@ -48,14 +57,25 @@
 
     };
 
+    /**
+     * Removes this bullet from the stage
+     */
     Bullet.prototype.clear = function () {
 
         if (this.element) {
 
             this.element.parentNode.removeChild(this.element);
-
+            
             this.weapon     = 
             this.element    = null;
+
+        }
+
+        if (this.tickFn) {
+
+            app.unTick(this.tickFn);
+
+            this.tickFn     = null;
 
         }
 
@@ -63,7 +83,7 @@
 
     function shoot (bullet, rightLimit, bottomLimit, up, down, left, right) {
 
-        app.onTick(function bulletTick () {
+        bullet.tickFn = function () {
             
             if (down) {
 
@@ -100,8 +120,7 @@
 
                 // remove
                 bullet.clear();
-                app.unTick(bulletTick);
-
+                
             }
             else {
 
@@ -111,7 +130,9 @@
                 
             }
 
-        });
+        }
+
+        app.onTick(bullet.tickFn);
         
     }
 

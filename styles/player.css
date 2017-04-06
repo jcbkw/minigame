@@ -1,6 +1,7 @@
 .player {
 
     position: absolute;
+    z-index: 100;
     background-color: transparent;
     background-repeat: no-repeat;
 

@@ -1,5 +1,10 @@
 (function (Weapon, Bullet) {
 
+    /**
+     * @class A base Gun class.
+     * 
+     * @param {app.player} player 
+     */
     function Gun (player) {
 
         Weapon.call(this, player);
@@ -10,6 +15,9 @@
 
     Gun.prototype = new Weapon();
 
+    /**
+     * Attacks (shoots a bullet) using this gun.
+     */
     Gun.prototype.attack =  function () {
 
         var bullet;
