@@ -27,13 +27,13 @@
          * The player width
          * @type Number
          */
-        width: 25,
+        width: 32,
 
         /**
          * The player height
          * @type Number
          */
-        height: 25,
+        height: 32,
 
         /**
          * Horizontal position of the player on the stage.
@@ -70,8 +70,8 @@
             
             this.element = document.createElement('div');
 
-            this.element.classList.add('player');
-            
+            this.element.classList.add('player', 'alice');
+                        
             this.element.style.width  = this.width  + "px";
             this.element.style.height = this.height + "px";
 
@@ -167,14 +167,63 @@
 
     }
 
+    /**
+     * This gets called on each application tick.
+     * It checks the directions listed by the joystick
+     * and moves the player towards them.
+     * 
+     * The function also assigns the correct position
+     * classes to the player so that the correct sprites
+     * get displayed.
+     * 
+     * @private
+     */
     function animate () {
 
-        var count = app.joystick.direction.length,
+        var direction,
+            count = app.joystick.direction.length,
             i;
-            
-        for (i = 0; i < count; i += 1) {
+        
+        clearDirectionClasses();
 
-            app.player.step(app.joystick.direction[i]);
+        if (count === 0) {
+
+            app.player.element.classList.remove('walking');
+
+        }
+        else {
+
+            app.player.element.classList.add('walking');
+
+            for (i = 0; i < count; i += 1) {
+
+                direction = app.joystick.direction[i];
+
+                app.player.element.classList.add(direction);
+                app.player.step(direction);
+
+            }
+
+        }
+
+    }
+
+    /**
+     * Removes all the directopn classes
+     * (e.g. up, down, left right) from the 
+     * player element.
+     * 
+     * @private
+     */
+    function clearDirectionClasses () {
+
+        for (var i in app.player.direction) {
+
+            if (app.player.direction.hasOwnProperty(i)) {
+
+                app.player.element.classList.remove(app.player.direction[i]);
+                
+            }
 
         }
 

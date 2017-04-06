@@ -18,6 +18,9 @@
         app.player.render(app.stage.element);
         app.joystick.init();
         app.player.init();
+
+        // start ticking
+        setInterval(tick, 17);
         
     };
 
@@ -41,6 +44,12 @@
 
     };
 
+    /**
+     * Sequentially calls each one of the callback functions
+     * passed to app.onTick on each tick (approx 60 times per second).
+     * 
+     * @private
+     */
     function tick () {
 
         if (!app.paused) {
@@ -54,8 +63,6 @@
         }
 
     }
-
-    setInterval(tick, 17);
 
     app.onReady();
 

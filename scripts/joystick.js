@@ -1,5 +1,13 @@
 (function (arg) {
 
+    /**
+     * An enumeration of the keyboard arrow key codes
+     * for reference.
+     * 
+     * @private
+     * 
+     * @type Object
+     */
     var keymap = {
 
         left_arrow  : 37,
@@ -11,6 +19,9 @@
 
     app.joystick = {
 
+        /**
+         * Initializes the jostick
+         */
         init: function () {
 
             document.addEventListener("keydown", onKeydown , false);
@@ -18,10 +29,24 @@
 
         },
 
+        /**
+         * Contains the directional buttons
+         * currently pressed by the en user.
+         * 
+         * @type String[]
+         */
         direction: [],
 
     };
 
+    /**
+     * Updates the app.joystick.direction array on keydown
+     * to add the newly pressed direction.
+     * 
+     * @private
+     * 
+     * @param {Event} event 
+     */
     function onKeydown (event) {
 
         event.preventDefault();
@@ -56,6 +81,14 @@
 
     }
 
+    /**
+     * Updates the app.joystick.direction array on keydown
+     * to remove the newly released direction.
+     * 
+     * @private
+     * 
+     * @param {Event} event 
+     */
     function onKeyup (event) {
 
          switch (event.which) {
@@ -88,6 +121,15 @@
 
     }
 
+    /**
+     * Adds the provided direction to the app.joystick.direction
+     * array if the provided direction didn't already figure in 
+     * the array.
+     * 
+     * @private
+     * 
+     * @param {String} direction 
+     */
     function addDirection (direction) {
 
         if (app.joystick.direction.indexOf(direction) === -1) {
@@ -98,6 +140,14 @@
 
     }
 
+    /**
+     * Removes the provided direction from the app.joystick.direction
+     * array if the provided direction figured in the array.
+     * 
+     * @private
+     * 
+     * @param {String} direction 
+     */
     function removeDirection (direction) {
 
         var index = app.joystick.direction.indexOf(direction);
