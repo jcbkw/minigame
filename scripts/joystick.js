@@ -18,7 +18,7 @@
 
         },
 
-        direction: null,
+        direction: [],
 
     };
 
@@ -30,25 +30,25 @@
 
             case keymap.left_arrow : 
                 
-                app.joystick.direction = app.player.direction.LEFT;
+                addDirection(app.player.direction.LEFT);
 
             break;
 
             case keymap.right_arrow : 
                 
-                app.joystick.direction = app.player.direction.RIGHT;
+                addDirection(app.player.direction.RIGHT);
 
             break;  
 
             case keymap.up_arrow : 
                 
-                app.joystick.direction = app.player.direction.UP;
+                addDirection(app.player.direction.UP);
 
             break;
 
             case keymap.down_arrow : 
                 
-                app.joystick.direction = app.player.direction.DOWN;
+                addDirection(app.player.direction.DOWN);
 
             break;             
 
@@ -58,7 +58,55 @@
 
     function onKeyup (event) {
 
-        app.joystick.direction = null;
+         switch (event.which) {
+
+            case keymap.left_arrow : 
+                
+                removeDirection(app.player.direction.LEFT);
+
+            break;
+
+            case keymap.right_arrow : 
+                
+                removeDirection(app.player.direction.RIGHT);
+
+            break;  
+
+            case keymap.up_arrow : 
+                
+                removeDirection(app.player.direction.UP);
+
+            break;
+
+            case keymap.down_arrow : 
+                
+                removeDirection(app.player.direction.DOWN);
+
+            break;             
+
+        }
+
+    }
+
+    function addDirection (direction) {
+
+        if (app.joystick.direction.indexOf(direction) === -1) {
+
+            app.joystick.direction.push(direction);
+
+        }
+
+    }
+
+    function removeDirection (direction) {
+
+        var index = app.joystick.direction.indexOf(direction);
+
+        if (index !== -1) {
+
+            app.joystick.direction.splice(index, 1);
+
+        }
 
     }
 

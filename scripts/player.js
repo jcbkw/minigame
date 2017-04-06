@@ -169,9 +169,12 @@
 
     function animate () {
 
-        if (app.joystick.direction !== null) {
+        var count = app.joystick.direction.length,
+            i;
+            
+        for (i = 0; i < count; i += 1) {
 
-            app.player.step(app.joystick.direction);
+            app.player.step(app.joystick.direction[i]);
 
         }
 
