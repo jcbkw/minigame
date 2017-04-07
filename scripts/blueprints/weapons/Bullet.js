@@ -1,3 +1,5 @@
+/* global app */
+
 (function () {
 
     /**
@@ -79,7 +81,7 @@
 
         }
 
-    }
+    };
 
     function shoot (bullet, rightLimit, bottomLimit, up, down, left, right) {
 
@@ -130,7 +132,7 @@
                 
             }
 
-        }
+        };
 
         app.onTick(bullet.tickFn);
         

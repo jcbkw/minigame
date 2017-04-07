@@ -1,3 +1,5 @@
+/* global app */
+
 (function () {
 
     var queuedForTick = [];
@@ -12,7 +14,7 @@
     /**
      * Calls the provided callback function on each tick.
      * 
-     * @param Function callback The function to be called.
+     * @param {Function} callback The function to be called.
      */
     app.onTick = function (callback) {
 
@@ -23,7 +25,7 @@
     /**
      * Removes the provided callback function from the tick queue.
      * 
-     * @param Function callback The function to be removed from the tick queue.
+     * @param {Function} callback The function to be removed from the tick queue.
      */
     app.unTick = function (callback) {
 
@@ -49,6 +51,7 @@
         app.player.render(app.stage.element);
         app.joystick.init();
         app.player.init();
+        app.player.weapon = new app.blueprints.weapons.Gun(app.player);
 
         // start ticking
         setInterval(tick, 17);

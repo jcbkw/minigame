@@ -1,3 +1,5 @@
+/* global app */
+
 (function (arg) {
 
     /**
@@ -10,14 +12,36 @@
      */
     var keymap = {
 
-        left_arrow  : 37,
-        up_arrow    : 38,
-        right_arrow : 39,
-        down_arrow  : 40
+            left_arrow  : 37,
+            up_arrow    : 38,
+            right_arrow : 39,
+            down_arrow  : 40,
+            spacebar    : 32,
+            enter       : 13
 
-    };
+        },
+
+        /**
+         * Contains the functions to be called 
+         * when buttons are pressed.
+         * 
+         * @type String[]
+         */
+        buttonCallbacks = [];
 
     app.joystick = {
+
+        /**
+         * The buttons supported by this joystick
+         * 
+         * @type Object
+         */
+        buttons: {
+
+            ACTION  : 'action',
+            START   : 'start'
+
+        },
 
         /**
          * Initializes the joystick
@@ -44,7 +68,42 @@
          * 
          * @type Number
          */
-        maxDirections: 2
+        maxDirections: 2,
+
+        /**
+         * Takes a callback function to be called when
+         * an action button is pressed.
+         * 
+         * @param {Function} callback
+         */
+        onButtonPressed: function (callback) {
+
+            var index = buttonCallbacks.indexOf(callback);
+
+            if (index === -1) {
+
+                buttonCallbacks.push(callback);
+
+            }
+
+        },
+
+        /**
+         * Removes a registered button press callback function.
+         * 
+         * @param {Function} callback
+         */
+        offButtonPressed: function (callback) {
+
+            var index = buttonCallbacks.indexOf(callback);
+
+            if (index !== -1) {
+
+                buttonCallbacks.splice(index, 1);
+
+            }
+
+        }
 
     };
 
@@ -124,6 +183,13 @@
                 
                 removeDirection(app.player.direction.DOWN);
 
+            break;
+            
+            case keymap.enter : 
+            case keymap.spacebar : 
+                
+                broadcastKeyPress(event.which === keymap.enter ? app.joystick.buttons.START : app.joystick.buttons.ACTION);
+
             break;             
 
         }
@@ -165,6 +231,25 @@
         if (index !== -1) {
 
             app.joystick.directions.splice(index, 1);
+
+        }
+
+    }
+
+    /**
+     * Calls all the registered button 
+     * press callback functions.
+     * 
+     * @private
+     * @param {String} button 
+     */
+    function broadcastKeyPress (button) {
+
+        for (var i = 0, count = buttonCallbacks.length, fn; i < count; i += 1) {
+
+            fn = buttonCallbacks[i];
+
+            fn && fn(button);
 
         }
 

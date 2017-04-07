@@ -13,7 +13,6 @@ var app = {};
  */
 app.blueprints = {};
 
-
 /**
  * Contains the Weapon constructors.
  * 

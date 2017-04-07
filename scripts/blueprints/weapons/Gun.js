@@ -1,3 +1,5 @@
+/* global app */
+
 (function (Weapon, Bullet) {
 
     /**
@@ -6,7 +8,7 @@
      * @param {app.player} player 
      */
     function Gun (player) {
-
+        
         Weapon.call(this, player);
 
         this.ammo = Number.POSITIVE_INFINITY;

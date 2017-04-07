@@ -1,3 +1,5 @@
+/* global app */
+
 (function () {
 
     app.player = {
@@ -13,7 +15,7 @@
             UP      : 'up',
             DOWN    : 'down',
             LEFT    : 'left',
-            RIGHT   : 'right',
+            RIGHT   : 'right'
 
         },
 
@@ -63,8 +65,22 @@
          * Initializes the player
          */
         init: function () {
-
+            
+            var that = this;
+            
             app.onTick(animate);
+            
+            function onButtonPress (button) {
+
+                if (button === app.joystick.buttons.ACTION) {
+
+                    that.attack();
+
+                }
+
+            };
+
+            app.joystick.onButtonPressed(onButtonPress);
 
         },
 
@@ -72,7 +88,7 @@
          * Set or returns player's stance (e.g. the direction
          * towards which the player is facing)
          * 
-         * @param String value
+         * @param {String} value
          * 
          * @returns String|null|app.player
          */
@@ -134,8 +150,8 @@
         /**
          * Makes the player step in the provided direction.
          * 
-         * @param String direction  The desired direction. Can be either
-         *                          up, down, left, right 
+         * @param {String} direction    The desired direction. Can be either
+         *                              up, down, left, right 
          */
         step: function (direction) {
 
@@ -154,8 +170,8 @@
          * Places the player at a new position
          * relative to its current position.
          * 
-         * @param Number [x=0] The relative x coordinate. 
-         * @param Number [y=0] The relativ y coordinate.
+         * @param {Number} [x=0] The relative x coordinate. 
+         * @param {Number} [y=0] The relativ y coordinate.
          * 
          * @example
          * app.player.move(5)     // moves right by 5px
@@ -170,8 +186,8 @@
         /**
          * Places the player at the specified position.
          * 
-         * @param Number x The x coordinate. 
-         * @param Number y The y coordinate. 
+         * @param {Number} x The x coordinate. 
+         * @param {Number} y The y coordinate. 
          */
         moveTo : function (x, y) {
 
@@ -246,10 +262,8 @@
 
         }
 
-    }
-
-var iii;
-
+    };
+    
     /**
      * This gets called on each application tick.
      * It checks the directions listed by the joystick
