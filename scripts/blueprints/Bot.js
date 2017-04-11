@@ -2,9 +2,15 @@
 
 (function () {
     
-    "use strict";
+    function Bot () {};
     
-    app.player = {
+    Bot.prototype  = {
+        
+        /**
+         * The Bot constructor
+         * @type Function
+         */
+        constructor: Bot,
 
         /**
          * Enumeration of the different directions that
@@ -12,14 +18,7 @@
          * 
          * @type Object
          */
-        direction: {
-
-            UP      : 'up',
-            DOWN    : 'down',
-            LEFT    : 'left',
-            RIGHT   : 'right'
-
-        },
+        direction : app.player.direction,
 
         /**
          * The player element
@@ -68,22 +67,14 @@
          */
         init: function () {
             
-            var that = this;
-            
             app.onTick(animate);
             
-            function onButtonPress (button) {
-
-                if (button === app.joystick.buttons.ACTION) {
-
-                    that.attack();
-
-                }
-
-            };
-
-            app.joystick.onButtonPressed(onButtonPress);
-
+        },
+        
+        exit: function () {
+            
+            app.unTick(animate);
+            
         },
 
         /**
@@ -143,7 +134,7 @@
             
             this.element = document.createElement('div');
 
-            this.element.classList.add('player', 'alice');
+            this.element.classList.add('bot');
             this.stance(null);
                         
             this.element.style.width  = this.width  + "px";
@@ -484,85 +475,8 @@
      * @private
      */
     function animate () {
-
-        var count = app.joystick.directions.length,
-            i;
-        
-        if (count === 0) {
-            
-            setWalking(false);
-
-        }
-        else {
-            
-            setWalking(true);
-            app.player.stance(resolveDirection(app.joystick.directions));
-
-            for (i = 0; i < count; i += 1) {
-
-                app.player.step(app.joystick.directions[i]);
-
-            }
-
-        }
-
     }
-
-    /**
-     * Computes the directional attribute to use
-     * based on the provided directions array.
-     * 
-     * @private
-     * @param {String[]} directions 
-     */
-    function resolveDirection (directions) {
-
-        var result;
-
-        // check for diagonals
-        if (directions.indexOf(app.player.direction.LEFT) !== -1) {
-
-            if (directions.indexOf(app.player.direction.UP) !== -1) {
-
-                // diagonal leftup
-                result = app.player.direction.LEFT + app.player.direction.UP;
-
-            }
-            else if (directions.indexOf(app.player.direction.DOWN) !== -1) {
-
-                // diagonal leftdown
-                result = app.player.direction.LEFT + app.player.direction.DOWN;
-
-            }
-
-        }
-        else if (directions.indexOf(app.player.direction.RIGHT) !== -1) {
-
-            if (directions.indexOf(app.player.direction.UP) !== -1) {
-
-                // diagonal rightup
-                result = app.player.direction.RIGHT + app.player.direction.UP;
-
-            }
-            else if (directions.indexOf(app.player.direction.DOWN) !== -1) {
-
-                // diagonal rightdown
-                result = app.player.direction.RIGHT + app.player.direction.DOWN;
-
-            }
-
-        }
-
-        // no diagonal found
-        if (!result) {
-
-            // then use the last item
-            result = directions[directions.length - 1];
-
-        }
-
-        return result || "";
-
-    }
+    
+    app.blueprints.Bot = Bot;
 
 })();

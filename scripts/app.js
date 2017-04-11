@@ -19,7 +19,7 @@
     app.onTick = function (callback) {
 
         queuedForTick.push(callback);
-
+        
     };
 
     /**
@@ -52,9 +52,18 @@
         app.joystick.init();
         app.player.init();
         app.player.weapon = new app.blueprints.weapons.Gun(app.player);
-
+        
+        app.player.moveTo((app.stage.width / 2) - (app.player.width / 2), 
+                           app.stage.height - app.player.height);
+                           
+        app.player.stance(app.player.direction.UP);
+        
+        var ai = new app.blueprints.ais.RaidAi();
+        ai.raid(5);
+        
         // start ticking
         setInterval(tick, 17);
+        
         
     };
 

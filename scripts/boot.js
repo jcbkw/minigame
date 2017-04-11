@@ -19,3 +19,10 @@ app.blueprints = {};
  * @type Object
  */
 app.blueprints.weapons = {};
+
+/**
+ * Contains the AI constructors.
+ * 
+ * @type Object
+ */
+app.blueprints.ais = {};
