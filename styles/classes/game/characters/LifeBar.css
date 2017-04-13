@@ -1,0 +1,11 @@
+.lifebar {
+    
+    border: 2px solid black;
+    
+}
+
+.lifebar-meter {
+    
+    background-color: red;
+    
+}

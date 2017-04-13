@@ -11,10 +11,10 @@
     function Bullet (weapon, container) {
         
         // call to super
-        app.classes.display.DisplayObject.call(this,
-                                       container, 
-                                       /*x*/0, /*y*/0, 
-                                       /*width*/5, /*height*/5);
+        app.classes.game.entities.Harmful.call(this,
+                                               container, 
+                                               /*x*/0, /*y*/0, 
+                                               /*width*/5, /*height*/5);
         
         this.weapon     = weapon;
         this.tickFn     = null;
@@ -35,9 +35,9 @@
     Bullet.GROUP = 'bullet';
     
     /**
-     * @type app.classes.display.Stage.prototype
+     * @type app.classes.game.weapons.Bullet
      */
-    var api = new app.classes.display.DisplayObject;
+    var api = new app.classes.game.entities.Harmful;
     
     /**
      * @property {Function} constructor Constructor
@@ -61,8 +61,6 @@
                          attacker.y + (attacker.height / 2));
         
         this.container.appendChild(this);
-        
-        
         
         shoot(
             this,            
@@ -97,15 +95,31 @@
 
         bullet.tickFn = function () {
             
+            /////////
+            // todo this is just to test
             var character = app.ai.hitsCharacter(bullet);
             
             if (character) {
                 
+                if (character instanceof app.classes.game.characters.Enemy) {
+                    
+                    character.harmWith(bullet);
+                    
+                    if (!character.isAlive()) {
+                        
+                        character.uncross();
+                        character.unrender();
+                        
+                    }
+                    
+                }
+                
                 // remove
                 bullet.clear();
-                console.log('hit');
                 
             }
+            ////////////
+            ////////////
             
             if (down) {
 

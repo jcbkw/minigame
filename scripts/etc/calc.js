@@ -9,13 +9,17 @@
          * the provided <code>percent</code> out of an unknown number X,
          * this function resolves and returns the unknown number X.
          * 
+         * For intance, suppose I have "20" and I know that this "20"
+         * represents "10%" of a certain number... This method
+         * helps me find that certain number.
+         * 
          * @param {Number} number
          * @param {Number} percent
          * 
          * @returns {Number}
          * 
          * @example
-         * app.etc.calc.ofPercent(20, 10); // returns 200
+         * app.etc.calc.fromPercent(20, 10); // returns 200
          */
         fromPercent: function (number, percent) {
             
@@ -58,7 +62,6 @@
             return (isNumber * 100) / ofNumber;
             
         }
-        
         
     };
     

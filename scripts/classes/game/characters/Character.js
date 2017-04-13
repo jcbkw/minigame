@@ -15,6 +15,7 @@
         
         // call to super
         app.classes.display.DisplayClip.call(this, stage, x, y, width, height);
+        
         this.group.add(Character.GROUP);
         
     }
@@ -68,6 +69,49 @@
      *                                                      execute pacing movements.
      */
     api.pacer = null;
+    
+    /**
+     * @type {app.classes.game.characters.DisplayGauge}
+     */
+    api.lifeGauge = null;
+    
+    /**
+     * Tells whether this character should be consider dangerous.
+     * 
+     * @returns {Boolean}
+     */
+    api.isHarmful = function () {
+        
+        return false;
+        
+    };
+    
+    /**
+     * Tells whether this character has a life gauge with more than
+     * 0 point;
+     * 
+     * @returns {Boolean}
+     */
+    api.isAlive = function () {
+        
+        return this.lifeGauge && this.lifeGauge.getLife() > 0;
+        
+    };
+    
+    /**
+     * Harm this character with the provided entity.
+     * 
+     * @param {app.classes.game.entities.Harmful} entity
+     */
+    api.harmWith = function (entity) {
+        
+        if (this.lifeGauge) {
+            
+            this.lifeGauge.updateLife(-entity.getHitPoints());
+            
+        }
+        
+    };
     
     /**
      * Returns a <code>CharacterPacing</code> instance used to make the character
@@ -152,60 +196,13 @@
     };
     
     /**
-     * Makes the clip "cross" (make a series of steps) towards the provided
-     * x and/or y axis relative to the stage.
+     * A function to call when the cross has been completed
      * 
-     * @param {Number} [x=0]                The desired final X position.
-     *                                      Cannot be a negative integer.
-     *                                      
-     * @param {Number} [y=0]                The desired final Y position.
-     *                                      Cannot be a negative integer.
-     * 
-     * @param {Function} [onComplete]       A function to call when the
-     *                                      walk has been completed.
-     *                                      
-     * @param {Function} [onDirection]      A function to call each time
-     *                                      this function has new insights
-     *                                      about the direction towards 
-     *                                      which this clip is walking.
-     *                                      
-     * @param {Function} [onStep]           A function to call after each
-     *                                      step of the walk.
-     * 
-     * @returns {app.player.walk.stopper}   A fustopthat can be called
-     *                                      to stop the walk before the
-     *                                      palyer reaches the provided x
-     *                                      and y points if desired.
-     */        
-    api.cross = function (x, y, onComplete, onDirection, onStep) {
-        
-        var that = this;
-        
-        function onEachStep (isLastStep) {
-            
-            that.setMoving(true);
-            onStep && onStep(isLastStep);
-            
-        }
-        
-        function onStopped (instance) {
-            
-            that.setMoving(false);
-            that.setStance(null);
-            onComplete && onComplete(instance);
-            
-        }
-        
-        function onDirectionInsight (direction) {
-            
-            that.setStance(direction);
-            onDirection && onDirection(direction);
-            
-        }
-
-        return app.classes.display.DisplayClip.prototype.cross.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
-
-    };
+     * @callback crossOnCompleteCallback
+     * @param {app.classes.display.DisplayClip} instance The instance which was crossing
+     * @param {Boolean} wasForce Whether the completion was forcefully triggered 
+     *                          (e.g. called before the cross has actually completed)
+     */
     
     /**
      * Makes the clip "cross" (make a series of steps) towards the provided 
@@ -217,8 +214,57 @@
      * @param {Number} [y=0]                The desired final Y position.
      *                                      Can be a negative integer.
      * 
-     * @param {Function} [onComplete]       A function to call when the
-     *                                      walk has been completed.
+     * @param {app.classes.display.DisplayClip~crossOnCompleteCallback} [onComplete]
+     *                                      
+     * @param {Function} [onDirection]      A function to call each time
+     *                                      this function has new insights
+     *                                      about the direction towards 
+     *                                      which this clip is crossing.
+     *                                      
+     * @param {Function} [onStep]           A function to call after each
+     *                                      step of the cross.
+     */
+    api.cross = function (x, y, onComplete, onDirection, onStep) {
+        
+        var that = this;
+        
+        function onEachStep (isLastStep) {
+            
+            that.setMoving(true);
+            onStep && onStep(isLastStep);
+            
+        }
+        
+        function onStopped (instance, forced) {
+            
+            that.setMoving(false);
+            that.setStance(null);
+            onComplete && onComplete(instance, forced);
+            
+        }
+        
+        function onDirectionInsight (direction) {
+            
+            that.setStance(direction);
+            onDirection && onDirection(direction);
+            
+        }
+
+        app.classes.display.DisplayClip.prototype.cross.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
+
+    };
+    
+    /**
+     * Makes the clip "cross" (make a series of steps) untils it reaches 
+     * the provided x and/or y axis relative to the stage.
+     * 
+     * @param {Number} [x=0]                The desired final X position.
+     *                                      Cannot be a negative integer.
+     *                                      
+     * @param {Number} [y=0]                The desired final Y position.
+     *                                      Cannot be a negative integer.
+     * 
+     * @param {crossOnCompleteCallback} [onComplete]
      *                                      
      * @param {Function} [onDirection]      A function to call each time
      *                                      this function has new insights
@@ -226,12 +272,7 @@
      *                                      which this clip is walking.
      *                                      
      * @param {Function} [onStep]           A function to call after each
-     *                                      step of the walk.
-     * 
-     * @returns {app.player.walk.stopper}   A fustopthat can be called
-     *                                      to stop the walk before the
-     *                                      palyer reaches the provided x
-     *                                      and y points if desired.
+     *                                      step of the cross.
      */
     api.crossTo = function (x, y, onComplete, onDirection, onStep) {
         
@@ -244,11 +285,11 @@
             
         }
         
-        function onStopped (instance) {
+        function onStopped (instance, forced) {
             
             that.setMoving(false);
             that.setStance(null);
-            onComplete && onComplete(instance);
+            onComplete && onComplete(instance, forced);
             
         }
         

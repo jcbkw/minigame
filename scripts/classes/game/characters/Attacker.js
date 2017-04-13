@@ -14,7 +14,7 @@
     function Attacker (stage, x, y, width, height) {
         
         // call to super
-        app.classes.game.characters.Character.call(this, stage, x, y, width, height);
+        app.classes.game.characters.HarmfulCharacter.call(this, stage, x, y, width, height);
         this.group.add(Attacker.GROUP);
         
         this.weapon = null;
@@ -34,7 +34,7 @@
     /**
      * @type app.classes.game.characters.Attacker.prototype
      */
-    var api = new app.classes.game.characters.Character;
+    var api = new app.classes.game.characters.HarmfulCharacter;
     
     /**
      * @property {Function} constructor Constructor

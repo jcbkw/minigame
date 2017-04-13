@@ -242,7 +242,7 @@
     };
     
     /**
-     * Draws the display object on the stage
+     * Draws the display object in its container
      */
     api.render = function () {
         
@@ -251,12 +251,36 @@
     };
     
     /**
-     * Removes the display object from the stage
+     * Erases the display object from its container
      */
     api.unrender = function () {
         
         this.element.parentNode &&
         this.element.parentNode.removeChild(this.element);
+        
+    };
+    
+    /**
+     * Returns this instance's width.
+     * 
+     * @param {Boolean} [halved=false] Whether the value should be returned halved.
+     * @returns {Number}
+     */
+    api.getWidth = function (halved) {
+        
+        return halved ? Math.round(this.width / 2) : this.width;
+        
+    };
+    
+    /**
+     * Returns this instance's height.
+     * 
+     * @param {Boolean} [halved=false] Whether the value should be returned halved.
+     * @returns {Number}
+     */
+    api.getHeight = function (halved) {
+        
+        return halved ? Math.round(this.height / 2) : this.height;
         
     };
     
@@ -282,30 +306,6 @@
     api.getBounds = function () {
        
         return this.bounds;
-        
-    };
-    
-    /**
-     * Returns this instance's width.
-     * 
-     * @param {Boolean} [halved=false] Whether the value should be returned halved.
-     * @returns {Number}
-     */
-    api.getWidth = function (halved) {
-        
-        return halved ? Math.round(this.width / 2) : this.width;
-        
-    };
-    
-    /**
-     * Returns this instance's height.
-     * 
-     * @param {Boolean} [halved=false] Whether the value should be returned halved.
-     * @returns {Number}
-     */
-    api.getHeight = function (halved) {
-        
-        return halved ? Math.round(this.height / 2) : this.height;
         
     };
     

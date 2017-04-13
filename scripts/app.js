@@ -88,8 +88,7 @@
                 
         // start ticking
         requestAnimationFrame(tick);
-        
-        
+                
     };
 
     /**

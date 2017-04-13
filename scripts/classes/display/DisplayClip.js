@@ -62,37 +62,6 @@
     api._uncross = null;
     
     /**
-     * Makes the clip "cross" (make a series of steps) untils it reaches 
-     * the provided x and/or y axis relative to the stage.
-     * 
-     * @param {Number} [x=0]                The desired final X position.
-     *                                      Cannot be a negative integer.
-     *                                      
-     * @param {Number} [y=0]                The desired final Y position.
-     *                                      Cannot be a negative integer.
-     * 
-     * @param {Function} [onComplete]       A function to call when the
-     *                                      walk has been completed.
-     *                                      
-     * @param {Function} [onDirection]      A function to call each time
-     *                                      this function has new insights
-     *                                      about the direction towards 
-     *                                      which this clip is walking.
-     *                                      
-     * @param {Function} [onStep]           A function to call after each
-     *                                      step of the walk.
-     */        
-    api.crossTo = function (x, y, onComplete, onDirection, onStep) {
-
-        // quick check for a positive integer
-        x = !x || x < 0 ? 0 : x;
-        y = !y || y < 0 ? 0 : y;
-
-        return this.cross(x - this.x, y - this.y, onComplete, onDirection, onStep);
-
-    };
-    
-    /**
      * A function to call when the cross has been completed
      * 
      * @callback crossOnCompleteCallback
@@ -116,10 +85,10 @@
      * @param {Function} [onDirection]      A function to call each time
      *                                      this function has new insights
      *                                      about the direction towards 
-     *                                      which this clip is walking.
+     *                                      which this clip is crossing.
      *                                      
      * @param {Function} [onStep]           A function to call after each
-     *                                      step of the walk.
+     *                                      step of the cross.
      */
     api.cross = function (x, y, onComplete, onDirection, onStep) {
 
@@ -269,8 +238,38 @@
     };
     
     /**
+     * Makes the clip "cross" (make a series of steps) untils it reaches 
+     * the provided x and/or y axis relative to the stage.
+     * 
+     * @param {Number} [x=0]                The desired final X position.
+     *                                      Cannot be a negative integer.
+     *                                      
+     * @param {Number} [y=0]                The desired final Y position.
+     *                                      Cannot be a negative integer.
+     * 
+     * @param {crossOnCompleteCallback} [onComplete]
+     *                                      
+     * @param {Function} [onDirection]      A function to call each time
+     *                                      this function has new insights
+     *                                      about the direction towards 
+     *                                      which this clip is walking.
+     *                                      
+     * @param {Function} [onStep]           A function to call after each
+     *                                      step of the cross.
+     */        
+    api.crossTo = function (x, y, onComplete, onDirection, onStep) {
+
+        // quick check for a positive integer
+        x = !x || x < 0 ? 0 : x;
+        y = !y || y < 0 ? 0 : y;
+
+        return this.cross(x - this.x, y - this.y, onComplete, onDirection, onStep);
+
+    };
+    
+    /**
      * Cancels any motion started by 
-     * cross or crossTo if any.
+     * cross or crossTo (if any) at any time.
      */
     api.uncross = function () {
         

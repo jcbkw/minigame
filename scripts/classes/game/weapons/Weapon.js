@@ -1,7 +1,7 @@
 /* global app, ns */
 
 (function () {
-
+    
     /**
      * @class Weapon The base Weapon class.
      * 
@@ -14,7 +14,7 @@
     function Weapon (container, x, y, width, height) {
         
         // call to super
-        app.classes.display.DisplayObject.call(this, container, x, y, width, height);
+        app.classes.game.entities.Harmful.call(this, container, x, y, width, height);
         
         this.user = null;
         
@@ -33,7 +33,7 @@
     /**
      * @type app.classes.display.Stage.prototype
      */
-    var api = new app.classes.display.DisplayObject;
+    var api = new app.classes.game.entities.Harmful;
     
     /**
      * @property {Function} constructor Constructor
