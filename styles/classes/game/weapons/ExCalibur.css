@@ -1,0 +1,57 @@
+.excalibur {
+    
+    background-image: url("../../../../images/weapons/swords/ex-calibur.png");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    
+    -webkit-transform-origin: center center;
+    
+}
+
+.player[stance=down] .excalibur {
+    
+    -webkit-transform: translate(7px, 20px);
+   
+}
+
+.player[stance=right] .excalibur {
+    
+    -webkit-transform: translate(25px, 7px) rotate(270deg);
+   
+}
+
+.player[stance=left] .excalibur {
+    
+    -webkit-transform: translate(-15px, 7px) rotate(90deg);
+   
+}
+
+.player[stance=up] .excalibur {
+    
+    -webkit-transform: translate(7px, -25px) rotate(180deg);
+   
+}
+
+.player[stance=leftup] .excalibur {
+    
+    -webkit-transform: translate(-17px, -12px) rotate(135deg);
+   
+}
+
+.player[stance=leftdown] .excalibur {
+    
+    -webkit-transform: translate(-15px, 15px) rotate(45deg);
+   
+}
+
+.player[stance=rightup] .excalibur {
+    
+    -webkit-transform: translate(25px, -12px) rotate(225deg);
+   
+}
+
+.player[stance=rightdown] .excalibur {
+    
+    -webkit-transform: translate(20px, 15px) rotate(315deg);
+   
+}

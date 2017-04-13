@@ -1,0 +1,119 @@
+.player.alice {
+
+    background-image: url("../../../../../images/classes/game/characters/players/alice.png");
+
+}
+
+.player.alice,
+.player.alice[stance=down] {
+
+    animation-name: playeralicewalkdown;
+    background-position-x: 0px;
+
+}
+
+.player.alice[stance=left] {
+
+    animation-name: playeralicewalkleft;
+    background-position: 0px -32px;
+
+}
+
+.player.alice[stance=right] {
+
+    animation-name: playeralicewalkright;
+    background-position: 0px -64px
+
+}
+
+.player.alice[stance=up] {
+
+    animation-name: playeralicewalkup;
+    background-position: 0px -96px;
+
+}
+
+.player.alice[stance=leftup] {
+
+    animation-name: playeralicewalkleftup;
+    background-position: -96px -32px;
+
+}
+
+.player.alice[stance=leftdown] {
+
+    animation-name: playeralicewalkleftdown;
+    background-position: -96px 0px;
+
+}
+
+.player.alice[stance=rightup] {
+
+    animation-name: playeralicewalkrightup;
+    background-position: -96px -96px;
+
+}
+
+.player.alice[stance=rightdown] {
+
+    animation-name: playeralicewalkrightdown;
+    background-position: -96px -64px;
+
+}
+
+@keyframes playeralicewalkdown {
+
+    from { background-position-x:   0px; }
+      to { background-position-x: -96px; }
+
+}
+
+@keyframes playeralicewalkleft {
+
+    from { background-position:   0px -32px; }
+      to { background-position: -96px -32px; }
+
+}
+
+@keyframes playeralicewalkup {
+
+    from { background-position:   0px -96px; }
+      to { background-position: -96px -96px; }
+   
+
+}
+
+@keyframes playeralicewalkright {
+
+    from { background-position:   0px -64px; }
+      to { background-position: -96px -64px; }
+
+}
+
+@keyframes playeralicewalkleftup {
+
+   from { background-position: -96px  -32px; }
+     to { background-position: -192px -32px; }
+
+}
+
+@keyframes playeralicewalkleftdown {
+
+   from { background-position: -96px  0px; }
+     to { background-position: -192px 0px; }
+
+}
+
+@keyframes playeralicewalkrightup {
+
+   from { background-position:  -96px -96px; }
+     to { background-position: -192px -96px; }
+
+}
+
+@keyframes playeralicewalkrightdown {
+
+   from { background-position:  -96px -64px; }
+     to { background-position: -192px -64px; }
+
+}

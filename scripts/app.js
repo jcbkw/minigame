@@ -1,24 +1,44 @@
-/* global app */
+/* global app, ns */
 
 (function () {
-
-    var queuedForTick = [];
-
+           
+    var queuedForTick = [],
+        queuedForTickMaxLength = 32000,
+        api = {};
+    
     /**
      * Tells whether the game is paused.
      * 
      * @type Boolean
      */
-    app.paused = false;
+    api.paused = false;
 
     /**
      * Calls the provided callback function on each tick.
      * 
      * @param {Function} callback The function to be called.
      */
-    app.onTick = function (callback) {
-
+    api.onTick = function (callback) {
+        
+        cleanseQueue();
         queuedForTick.push(callback);
+        
+    };
+    
+    /**
+     * Calls the provided callback function once, on
+     * the next tick only.
+     * 
+     * @param {Function} callback The function to be called.
+     */
+    api.nextTick = function (callback) {
+        
+        api.onTick(function oneTimer () {
+           
+            callback && callback();
+            app.unTick(oneTimer);
+            
+        });
         
     };
 
@@ -27,13 +47,13 @@
      * 
      * @param {Function} callback The function to be removed from the tick queue.
      */
-    app.unTick = function (callback) {
+    api.unTick = function (callback) {
 
         var index = queuedForTick.indexOf(callback);
 
         if (index !== -1) {
 
-            queuedForTick.splice(index, 1);
+            queuedForTick[index] = null;
 
         }
 
@@ -47,22 +67,27 @@
      */
     function init () {
         
-        app.stage.render(document.body);
-        app.player.render(app.stage.element);
-        app.joystick.init();
-        app.player.init();
-        app.player.weapon = new app.blueprints.weapons.Gun(app.player);
+        app.stage = new app.classes.game.Stage(document.body, 300, 300);
+        app.stage.render();
+        
+        app.player = new app.classes.game.characters.Player(app.stage, 0, 0, 32, 32);
+        
+        app.player.group.add('alice');
+        app.player.boundToContainer();
+        app.player.render();
+                
+        app.player.setWeapon(new app.classes.game.weapons.Gun());
         
         app.player.moveTo((app.stage.width / 2) - (app.player.width / 2), 
                            app.stage.height - app.player.height);
                            
-        app.player.stance(app.player.direction.UP);
+        app.player.setStance(app.classes.geom.Direction.UP);
         
-        var ai = new app.blueprints.ais.RaidAi();
-        ai.raid(5);
-        
+        app.ai = new app.classes.game.ai.ZombieRaid(app.stage);
+        app.ai.start();
+                
         // start ticking
-        setInterval(tick, 17);
+        requestAnimationFrame(tick);
         
         
     };
@@ -98,10 +123,43 @@
             }
 
         }
+        
+        requestAnimationFrame(tick);
 
     }
-
+    
+    function cleanseQueue () {
+        
+        var newQueue,
+            callback,
+            count = queuedForTick.length >>> 0,
+            i;
+        
+        if (count > queuedForTickMaxLength) {
+            
+            newQueue = [];
+            
+            for (i = 0; i < count; i += 1) {
+                
+                callback = queuedForTick[i];
+                
+                if (callback) {
+                    
+                    newQueue.push(callback);
+                    
+                }
+                
+            }
+            
+            queuedForTick = newQueue;
+            
+        }
+        
+    }
+    
+    ns.set('app', api);
+    
     // begin
     onReady();
-
+    
 })();
