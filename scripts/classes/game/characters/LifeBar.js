@@ -58,8 +58,8 @@
         
         if (this.meter) {
             
-            var percent  = app.etc.calc.toPercent(this.getLife(), this.getMax());
-            var newWidth = app.etc.calc.ofPercent(this.width, percent);
+            var percent  = app.tk.calc.toPercent(this.getLife(), this.getMax());
+            var newWidth = app.tk.calc.ofPercent(this.width, percent);
             
             this.meter.setSize(newWidth, this.height);
            

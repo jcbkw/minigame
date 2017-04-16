@@ -1,9 +1,5 @@
 .stage {
-
-    border: 1px solid black;
-    margin: 0 auto;
-    position: static;
-    overflow: hidden;
-    background-image: url("../../../images/classes/game/stage/grass.png");
-
+    
+    background-image: url("../../../images/classes/game/stage/soccer.svg");
+    
 }

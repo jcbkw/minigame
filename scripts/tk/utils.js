@@ -8,6 +8,6 @@
         
     };
     
-    ns.set('app.etc.utils', api);
+    ns.set('app.tk.utils', api);
     
 })();

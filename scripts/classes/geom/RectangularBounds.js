@@ -20,6 +20,54 @@
         this.bottom = bottom || 0;
         
     }
+    
+    /**
+     * Creates and returns a <code>app.classes.geom.RectangularBounds</code> using 
+     * the provided rectangle measurements.
+     * 
+     * @param {app.classes.geom.Rectangle} rectangle
+     * 
+     * @param {Boolean} [absolute=false]    <p>If <code>true</code> the bounds use 0 as their
+     *                                      top, left and the instance's width and height
+     *                                      as their bottom,right.</p>
+     *                                      <p>If <code>false</code> the bounds use the instance's
+     *                                      x and y as their top, left and the instance's 
+     *                                      width and height added to its x and y as their
+     *                                      bottom, right.</p>
+     * @param {Number} [originX=0]
+     * 
+     * @param {Number} [originY=0]
+     * 
+     * @returns {app.classes.geom.RectangularBounds}
+     */
+    RectangularBounds.fromRectangle = function (rectangle, absolute, originX, originY) {
+        
+        var bounds;
+        
+        if (absolute) {
+            
+            bounds          = new RectangularBounds(
+                /*top*/     originX || 0,
+                /*right*/   rectangle.width,
+                /*bottom*/  rectangle.height,
+                /*left*/    originY || 0
+            );
+            
+        }
+        else {
+            
+            bounds          = new RectangularBounds(
+                /*top*/     rectangle.y,
+                /*right*/   rectangle.x + rectangle.width,
+                /*bottom*/  rectangle.y + rectangle.height,
+                /*left*/    rectangle.x
+            );
+            
+        }
+        
+        return bounds;
+        
+    };
 
     RectangularBounds.prototype = {
 
@@ -51,7 +99,7 @@
         * The bottom bound
         * @type {Number}
         */
-       bottom: 0
+       bottom: 0       
 
     };
     

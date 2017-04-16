@@ -1,10 +1,10 @@
-.displayobject {
+.displaybase {
     
     position: absolute;
     
 }
 
-    .displayobject-innerelement {
+    .displaybase-content {
 
         position: relative;
         width: 100%;

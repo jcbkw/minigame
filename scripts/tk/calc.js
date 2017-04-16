@@ -19,7 +19,7 @@
          * @returns {Number}
          * 
          * @example
-         * app.etc.calc.fromPercent(20, 10); // returns 200
+         * app.tk.calc.fromPercent(20, 10); // returns 200
          */
         fromPercent: function (number, percent) {
             
@@ -37,7 +37,7 @@
          * @returns {Number}
          * 
          * @example
-         * app.etc.calc.ofPercent(200, 10); // returns 20
+         * app.tk.calc.ofPercent(200, 10); // returns 20
          */
         ofPercent: function (number, percent) {
             
@@ -55,7 +55,7 @@
          * @returns {Number}
          * 
          * @example
-         * app.etc.calc.toPercent(20, 200); // returns 10 (as in 10%)
+         * app.tk.calc.toPercent(20, 200); // returns 10 (as in 10%)
          */
         toPercent: function (isNumber, ofNumber) {
             
@@ -65,6 +65,6 @@
         
     };
     
-    ns.set('app.etc.calc', api);
+    ns.set('app.tk.calc', api);
     
 })();

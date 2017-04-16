@@ -60,7 +60,7 @@
         this.setPosition(attacker.x + (attacker.width  / 2),
                          attacker.y + (attacker.height / 2));
         
-        this.container.appendChild(this);
+        this.container.addChild(this);
         
         shoot(
             this,            

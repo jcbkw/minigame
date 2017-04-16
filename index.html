@@ -2,13 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title></title>
+        <title>Mini game</title>
         
         <!-- STYLES -->
         <link rel="icon" href="data:;base64,iVBORw0KGgo=">
         
-        <link href="styles/classes/game/display/DisplayObject.css" rel="stylesheet">
+        <link href="styles/classes/game/display/DisplayBase.css" rel="stylesheet">
         
+        <link href="styles/classes/game/Viewport.css" rel="stylesheet">
         <link href="styles/classes/game/Stage.css" rel="stylesheet">
         
         <link href="styles/classes/game/weapons/Bullet.css" rel="stylesheet">
@@ -31,8 +32,9 @@
         
         <!-- SCRIPTS -->
         <script src="scripts/ns.js"></script>
-        <script src="scripts/etc/utils.js"></script>
-        <script src="scripts/etc/calc.js"></script>
+        <script src="scripts/tk/arrays.js"></script>
+        <script src="scripts/tk/utils.js"></script>
+        <script src="scripts/tk/calc.js"></script>
         
         <script src="scripts/classes/geom/Point.js"></script>
         <script src="scripts/classes/geom/Size.js"></script>
@@ -42,12 +44,16 @@
         <script src="scripts/classes/geom/Rectangle.js"></script>
         <script src="scripts/classes/geom/RectangularBounds.js"></script>
         
+        <script src="scripts/classes/display/displaybase/Transformer.js"></script>
+        <script src="scripts/classes/display/displaybase/Processor.js"></script>
+        <script src="scripts/classes/display/DisplayBase.js"></script>
         <script src="scripts/classes/display/DisplayObject.js"></script>
         <script src="scripts/classes/display/DisplayClip.js"></script>
         
-        <script src="scripts/classes/game/Gauge.js"></script>
+        <script src="scripts/classes/game/Viewport.js"></script>
         <script src="scripts/classes/game/Stage.js"></script>
         <script src="scripts/classes/game/Joystick.js"></script>
+        <script src="scripts/classes/game/Gauge.js"></script>
                 
         <script src="scripts/classes/game/entities/Harmful.js"></script>
         

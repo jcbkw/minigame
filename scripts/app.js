@@ -33,12 +33,14 @@
      */
     api.nextTick = function (callback) {
         
-        api.onTick(function oneTimer () {
+        function oneTimer () {
            
             callback && callback();
             app.unTick(oneTimer);
             
-        });
+        }
+        
+        api.onTick(oneTimer);
         
     };
 
@@ -67,7 +69,11 @@
      */
     function init () {
         
-        app.stage = new app.classes.game.Stage(document.body, 300, 300);
+        app.viewport = new app.classes.game.Viewport(document.body, 300, 300);
+        app.viewport.render();
+        
+        app.stage = new app.classes.game.Stage(app.viewport, 0, 0, 1574, 1070);
+        app.stage.boundToContainer();
         app.stage.render();
         
         app.player = new app.classes.game.characters.Player(app.stage, 0, 0, 32, 32);
@@ -78,8 +84,11 @@
                 
         app.player.setWeapon(new app.classes.game.weapons.Gun());
         
-        app.player.moveTo((app.stage.width / 2) - (app.player.width / 2), 
-                           app.stage.height - app.player.height);
+        app.player.moveTo( app.viewport.cpu().centerX() - app.player.cpu().centerX(), 
+                           app.viewport.height - app.player.height);
+                           
+        /*app.player.moveTo( app.stage.width - app.player.cpu().centerX(), 
+                           app.stage.height - app.player.height);*/
                            
         app.player.setStance(app.classes.geom.Direction.UP);
         
@@ -88,6 +97,19 @@
                 
         // start ticking
         requestAnimationFrame(tick);
+        
+        app.onTick(function (viewPortCenterX, viewPortCenterY) {
+            
+            return function () {
+                
+                var stageX = -(app.player.x - viewPortCenterX),
+                    stageY = -(app.player.y - viewPortCenterY);
+                
+                app.stage.moveTo(stageX, stageY);
+                
+            };
+                        
+        }(app.viewport.cpu().centerX(), app.viewport.cpu().centerY()));
                 
     };
 

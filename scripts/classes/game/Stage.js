@@ -1,18 +1,33 @@
  /* global app, ns */
 
 (function () {
-     
+    
     /**
-     * @class Stage The main DisplayObject of the application
+     * @type app.classes.display.DisplayClip
+     */
+    var Super = app.classes.display.DisplayClip,
+    
+        /**
+         * @lends app.classes.display.Stage.prototype
+         */
+        api = new Super;
+    
+    /**
+     * @class Stage The main DisplayClip of the application
      * 
-     * @param {Element} element
+     * @param {app.classes.game.Viewport} viewport
+     * @param {Number} [x=0]
+     * @param {Number} [y=0]
      * @param {Number} [width=0]
      * @param {Number} [height=0]
      */
-    function Stage (element, width, height) {
+    function Stage (viewport, x, y, width, height) {
         
         // call to super
-        app.classes.display.DisplayObject.call(this, createInitialDisplayObject(element), 0, 0, width, height);
+        Super.call(this, viewport, x, y, width, height);
+        
+        this.viewport = viewport;
+        
         this.group.add(Stage.GROUP);
         
     }
@@ -28,32 +43,31 @@
     Stage.GROUP = 'stage';
     
     /**
-     * @type app.classes.display.Stage.prototype
-     */
-    var api = new app.classes.display.DisplayObject;
-    
-    /**
      * @property {Function} constructor Constructor
      */
     api.constructor = Stage;
     
     /**
-     * Creates the initial display object using this element.
-     * e.g. A container-less display object.
-     * 
-     * @private
-     * 
-     * @param {Element} element
-     * @returns {app.classes.display.DisplayObject}
+     * @type {app.classes.game.Viewport}
      */
-    function createInitialDisplayObject (element) {
+    api.viewport = null;
+    
+    /**
+     * Restricts the Stage's panning to its viewport.
+     * The <code>outside</code> parameter has no effect.
+     * 
+     * @param {Boolean} outside
+     */
+    api.boundToContainer = function (outside) {
         
-        var displayObject = new app.classes.display.DisplayObject(null);
-        
-        displayObject.element = 
-        displayObject.innerElement = element;
-        
-        return displayObject;
+        this.setBounds(new app.classes.geom.RectangularBounds(
+
+            /*top*/     -(this.height - this.viewport.width),
+            /*right*/   0,
+            /*bottom*/  0,
+            /*left*/    -(this.width - this.viewport.width)
+
+        ));
         
     };
     

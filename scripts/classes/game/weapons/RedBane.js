@@ -49,7 +49,7 @@
             that.drawn = true;
             
             this.setSize(48, 24);
-            this.user.appendChild(this);
+            this.user.addChild(this);
             
             function clear () {
                 
