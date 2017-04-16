@@ -1,6 +1,21 @@
  /* global app, ns */
 
 (function () {
+    
+    /**
+     * @type app.classes.game.entities.Entity
+     */
+    var SuperA = app.classes.game.entities.Entity,
+        
+        /**
+         * @type app.classes.display.DisplayClip
+         */
+        SuperB = app.classes.display.DisplayClip,
+        
+        /**
+         * @lends app.classes.game.characters.Character.prototype
+         */
+        api = ns.merge(new SuperA, SuperB.prototype);
      
     /**
      * @class Character A base Character Class
@@ -14,7 +29,8 @@
     function Character (stage, x, y, width, height) {
         
         // call to super
-        app.classes.display.DisplayClip.call(this, stage, x, y, width, height);
+        SuperA.call(this, stage, x, y, width, height);
+        SuperB.call(this, stage, x, y, width, height);
         
         this.group.add(Character.GROUP);
         
@@ -47,17 +63,12 @@
         
         /**
          * @memberOf app.classes.game.characters.Character.Attributes
-         * @name MOVING
+         * @name IN_MOTION
          * @type {String}
          */
-        MOVING: 'moving'
+        IN_MOTION: 'in-motion'
                 
     };
-    
-    /**
-     * @type app.classes.game.characters.Character.prototype
-     */
-    var api = new app.classes.display.DisplayClip;
     
     /**
      * @property {Function} constructor Constructor
@@ -82,7 +93,7 @@
      */
     api.isHarmful = function () {
         
-        return false;
+        return this.getLifePoints() < 0;
         
     };
     
@@ -99,15 +110,24 @@
     };
     
     /**
-     * Harm this character with the provided entity.
+     * Handles the collision of this entity with another
      * 
-     * @param {app.classes.game.entities.Harmful} entity
+     * @param {app.classes.game.entities.Entity} entity
      */
-    api.harmWith = function (entity) {
+    api.handleCollision = function (entity) {
         
-        if (this.lifeGauge) {
+        var entityLifePoints;
+        
+        // call super method
+        SuperA.prototype.handleCollision.call(this, entity);
+        
+        entityLifePoints = entity.getLifePoints();
+        
+        // if not a neutral entity
+        if (entityLifePoints !== 0) {
             
-            this.lifeGauge.updateLife(-entity.getHitPoints());
+            this.lifeGauge &&
+            this.lifeGauge.updateLife(entityLifePoints);
             
         }
         
@@ -165,33 +185,33 @@
     };
     
     /**
-     * Indicate that the character is walking.
+     * Indicate that the character is in motion.
      * 
      * @param {Boolean} value
      */
-    api.setMoving = function (value) {
+    api.setInMotion = function (value) {
         
         if (value) {
             
-            this.group.add(Character.Attributes.MOVING);
+            this.group.add(Character.Attributes.IN_MOTION);
             
         }
         else {
             
-            this.group.remove(Character.Attributes.MOVING);
+            this.group.remove(Character.Attributes.IN_MOTION);
             
         }
         
     };
     
     /**
-     * Check whether the character is walking.
+     * Check whether the character is in motion.
      * 
      * @returns {Boolean}
      */
-    api.isMoving = function () {
+    api.isInMotion = function () {
         
-        return this.group.contains(Character.Attributes.MOVING);
+        return this.group.contains(Character.Attributes.IN_MOTION);
         
     };
     
@@ -199,7 +219,7 @@
      * A function to call when the cross has been completed
      * 
      * @callback crossOnCompleteCallback
-     * @param {app.classes.display.DisplayClip} instance The instance which was crossing
+     * @param {SuperB} instance The instance which was crossing
      * @param {Boolean} wasForce Whether the completion was forcefully triggered 
      *                          (e.g. called before the cross has actually completed)
      */
@@ -214,7 +234,7 @@
      * @param {Number} [y=0]                The desired final Y position.
      *                                      Can be a negative integer.
      * 
-     * @param {app.classes.display.DisplayClip~crossOnCompleteCallback} [onComplete]
+     * @param {SuperB~crossOnCompleteCallback} [onComplete]
      *                                      
      * @param {Function} [onDirection]      A function to call each time
      *                                      this function has new insights
@@ -230,14 +250,14 @@
         
         function onEachStep (isLastStep) {
             
-            that.setMoving(true);
+            that.setInMotion(true);
             onStep && onStep(isLastStep);
             
         }
         
         function onStopped (instance, forced) {
             
-            that.setMoving(false);
+            that.setInMotion(false);
             that.setStance(null);
             onComplete && onComplete(instance, forced);
             
@@ -250,7 +270,7 @@
             
         }
 
-        app.classes.display.DisplayClip.prototype.cross.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
+        SuperB.prototype.cross.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
 
     };
     
@@ -280,14 +300,14 @@
         
         function onEachStep (isLastStep) {
             
-            that.setMoving(true);
+            that.setInMotion(true);
             onStep && onStep(isLastStep);
             
         }
         
         function onStopped (instance, forced) {
             
-            that.setMoving(false);
+            that.setInMotion(false);
             that.setStance(null);
             onComplete && onComplete(instance, forced);
             
@@ -300,10 +320,10 @@
             
         }
 
-        return app.classes.display.DisplayClip.prototype.crossTo.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
+        return SuperB.prototype.crossTo.call(this, x, y, onStopped, onDirectionInsight, onEachStep);
 
     };
-    
+        
     Character.prototype = api;
     
     ns.set('app.classes.game.characters.Character', Character);

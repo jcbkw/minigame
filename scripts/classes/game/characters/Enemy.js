@@ -15,10 +15,12 @@
         
         // call to super
         app.classes.game.characters.Attacker.call(this, stage, x, y, width, height);
-        
+                
         this.lifeGauge = new app.classes.game.characters.LifeBar(this);
         
         this.lifeGauge.render();
+        
+        this.setLifePoints(-1);
         
         this.group.add(Enemy.GROUP);
         

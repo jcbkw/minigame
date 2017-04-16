@@ -92,12 +92,12 @@
         
         if (count === 0) {
             
-            player.setMoving(false);
+            player.setInMotion(false);
 
         }
         else {
             
-            player.setMoving(true);
+            player.setInMotion(true);
             player.setStance(resolveDirection(player.joystick.directions));
 
             for (i = 0; i < count; i += 1) {

@@ -2,12 +2,12 @@
 
 (function () {
     
-    var BaseClass = app.classes.game.characters.DisplayGauge,
+    var Super = app.classes.game.characters.DisplayGauge,
     
         /**
          * @lends app.classes.game.characters.LifeBar.prototype
          */
-        api = new BaseClass;
+        api = new Super;
     
     /**
      * Creates a LifeBar instance
@@ -25,7 +25,7 @@
             x = (container.width / 2) - (width / 2),
             y = -(height * 2);
            
-        BaseClass.call(this, container, x, y, width, height);
+        Super.call(this, container, x, y, width, height);
         this.group.add(LifeBar.GROUP);
         
         createMeter(this);
@@ -54,7 +54,8 @@
      */
     api.setLife = function (value) {
         
-        BaseClass.prototype.setLife.call(this, value);
+        // call super method
+        Super.prototype.setLife.call(this, value);
         
         if (this.meter) {
             
@@ -62,10 +63,6 @@
             var newWidth = app.tk.calc.ofPercent(this.width, percent);
             
             this.meter.setSize(newWidth, this.height);
-           
-            
-            console.log(newWidth + 'px');
-            console.log('enemy hit. life now ' + this.getLife());
             
         }
         
@@ -79,6 +76,7 @@
         lifeBar.meter.group.add("lifebar-meter");
         
         lifeBar.meter.render();
+        
     }
     
     LifeBar.prototype = api;

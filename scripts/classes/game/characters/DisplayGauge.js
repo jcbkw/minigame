@@ -3,6 +3,21 @@
 (function () {
     
     /**
+     * @type app.classes.display.DisplayObject
+     */
+    var SuperA = app.classes.display.DisplayObject,
+        
+        /**
+         * @type app.classes.game.Gauge
+         */
+        SuperB = app.classes.game.Gauge,
+        
+        /**
+         * @lends app.classes.game.characters.Character.prototype
+         */
+        api = ns.merge(new SuperA, SuperB.prototype);
+        
+    /**
      * Creates a DisplayGauge instance
      * 
      * @class
@@ -18,11 +33,8 @@
      */
     function DisplayGauge (container, x, y, width, height) {
         
-        app.classes.display.DisplayObject.call(this, 
-                                               container, x, y, width, height);
-                                               
-        app.classes.game.Gauge.call(this, DisplayGauge.DEFAULT_LIFE, 
-                                          DisplayGauge.DEFAULT_LIFE);
+        SuperA.call(this, container, x, y, width, height);
+        SuperB.call(this, DisplayGauge.DEFAULT_LIFE, DisplayGauge.DEFAULT_LIFE);
         
         this.group.add(DisplayGauge.GROUP);
         
@@ -48,15 +60,7 @@
      */
     DisplayGauge.DEFAULT_LIFE = 100;
     
-    /**
-     * @lends app.classes.game.characters.DisplayGauge.prototype
-     */
-    var api = new app.classes.display.DisplayObject;
-    
     DisplayGauge.prototype = api;
-    
-    // (mixin) inherits from app.classes.game.Gauge
-    ns.merge(api, app.classes.game.Gauge.prototype);
     
     /**
      * @property {Function} constructor Constructor

@@ -1,9 +1,21 @@
  /* global app, ns */
 
 (function () {
-     
+    
     /**
-     * @class Attacker A base Attacker Class
+     * @type app.classes.game.characters.Character
+     */
+    var Super = app.classes.game.characters.Character,
+        
+        /**
+         * @lends app.classes.game.characters.Attacker.prototype
+         */
+        api = new Super;
+    
+    /**
+     * Creates a Character who may possess a weapon.
+     * 
+     * @class Attacker
      * 
      * @param {DisplayObject} stage
      * @param {Number} [x=0]
@@ -14,27 +26,11 @@
     function Attacker (stage, x, y, width, height) {
         
         // call to super
-        app.classes.game.characters.HarmfulCharacter.call(this, stage, x, y, width, height);
-        this.group.add(Attacker.GROUP);
+        Super.call(this, stage, x, y, width, height);
         
         this.weapon = null;
             
     }
-    
-    /**
-     * The display object's group.
-     * 
-     * @static
-     * @name GROUP
-     * @type String
-     * @memberOf app.classes.game.characters.Attacker
-     */
-    Attacker.GROUP = 'attacker';
-    
-    /**
-     * @type app.classes.game.characters.Attacker.prototype
-     */
-    var api = new app.classes.game.characters.HarmfulCharacter;
     
     /**
      * @property {Function} constructor Constructor

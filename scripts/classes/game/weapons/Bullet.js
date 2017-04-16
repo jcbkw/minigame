@@ -11,7 +11,7 @@
     function Bullet (weapon, container) {
         
         // call to super
-        app.classes.game.entities.Harmful.call(this,
+        app.classes.game.entities.Entity.call(this,
                                                container, 
                                                /*x*/0, /*y*/0, 
                                                /*width*/5, /*height*/5);
@@ -19,6 +19,8 @@
         this.weapon     = weapon;
         this.tickFn     = null;
         this.speed      = 5;
+        
+        this.setLifePoints(-5);
         
         this.group.add(Bullet.GROUP);
         
@@ -37,7 +39,7 @@
     /**
      * @type app.classes.game.weapons.Bullet
      */
-    var api = new app.classes.game.entities.Harmful;
+    var api = new app.classes.game.entities.Entity;
     
     /**
      * @property {Function} constructor Constructor
@@ -103,7 +105,7 @@
                 
                 if (character instanceof app.classes.game.characters.Enemy) {
                     
-                    character.harmWith(bullet);
+                    character.handleCollision(bullet);
                     
                     if (!character.isAlive()) {
                         

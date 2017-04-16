@@ -14,7 +14,7 @@
     function Weapon (container, x, y, width, height) {
         
         // call to super
-        app.classes.game.entities.Harmful.call(this, container, x, y, width, height);
+        app.classes.game.entities.Entity.call(this, container, x, y, width, height);
         
         this.user = null;
         
@@ -33,7 +33,7 @@
     /**
      * @type app.classes.display.Stage.prototype
      */
-    var api = new app.classes.game.entities.Harmful;
+    var api = new app.classes.game.entities.Entity;
     
     /**
      * @property {Function} constructor Constructor

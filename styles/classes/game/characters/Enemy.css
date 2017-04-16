@@ -6,7 +6,7 @@
     
 }
 
-.enemy.moving {
+.enemy.in-motion {
 
     animation: none .8s steps(3) infinite;
 
