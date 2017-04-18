@@ -611,7 +611,7 @@
             
             if (result) {
                 
-                array.push(result);
+                array.push(value);
                 
             }
             

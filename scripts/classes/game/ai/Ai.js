@@ -19,8 +19,8 @@
     var api = {};
     
     /**
-     * @property {app.classes.game.Stage} stage The stage where this AI should render 
-     *                                          characters.
+     * @property {app.classes.game.Stage} stage The stage where this AI should 
+     *                                          add characters.
      */
     api.stage = null;
     
@@ -36,14 +36,13 @@
      */
     api.start = function () {};
     
-    
     api.hitsCharacter = function (rectangle) {
         
         for (var i = 0, count = this.characters.length, character; i < count; i += 1) {
             
             character = this.characters[i];
             
-            if (rectangle.hitsRectangle(character)) {
+            if (rectangle.intersects(character)) {
                 
                 return character;
                 

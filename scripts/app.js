@@ -12,6 +12,13 @@
      * @type Boolean
      */
     api.paused = false;
+    
+    /**
+     * Whethe the app is in debug mode;
+     * 
+     * @type Boolean
+     */
+    api.debug = true;
 
     /**
      * Calls the provided callback function on each tick.
@@ -60,6 +67,23 @@
         }
 
     };
+    
+    /**
+     * Throws the provided error.
+     * 
+     * @param {Error} error
+     */
+    api.die = function (error) {
+        
+        throw error;
+        
+    };
+    
+    api.log = function () {
+        
+        api.debug && console.log.apply(console, Array.prototype.slice.call(arguments, 0));
+        
+    };
 
     /**
      * Initializes the main objects and
@@ -70,47 +94,47 @@
     function init () {
         
         app.viewport = new app.classes.game.Viewport(document.body, 300, 300);
-        app.viewport.render();
+                
+        app.stage = new app.classes.game.Stage(0, 0, 1574, 1070);
         
-        app.stage = new app.classes.game.Stage(app.viewport, 0, 0, 1574, 1070);
+        app.viewport.addChild(app.stage);
         app.stage.boundToContainer();
-        app.stage.render();
         
-        app.player = new app.classes.game.characters.Player(app.stage, 0, 0, 32, 32);
+        app.player = new app.classes.game.entities.characters.Player(0, 0, 32, 32);
         
         app.player.group.add('alice');
+        app.stage.addChild(app.player);
         app.player.boundToContainer();
-        app.player.render();
-                
-        app.player.setWeapon(new app.classes.game.weapons.Gun());
+        
+        app.player.setWeapon(new app.classes.game.entities.base.Gun());
         
         app.player.moveTo( app.viewport.cpu().centerX() - app.player.cpu().centerX(), 
                            app.viewport.height - app.player.height);
-                           
+        
         /*app.player.moveTo( app.stage.width - app.player.cpu().centerX(), 
                            app.stage.height - app.player.height);*/
                            
-        app.player.setStance(app.classes.geom.Direction.UP);
+        app.player.setDirection(app.classes.geom.Direction.UP);
+        
+        ns.set('app.game.engine', new app.classes.game.Engine);
         
         app.ai = new app.classes.game.ai.ZombieRaid(app.stage);
         app.ai.start();
-                
+        
+        var boundary = new app.classes.game.entities.volumes.Boundary(40, 412, 70, 245);
+        
+        app.stage.addChild(boundary);
+        
+        boundary.element.style.background = 'rgba(255,0,0,.5)';
+        
+        var box = new app.classes.game.entities.volumes.Box(40, 250);
+        
+        app.stage.addChild(box);
+        box.boundToContainer();
+            
         // start ticking
         requestAnimationFrame(tick);
         
-        app.onTick(function (viewPortCenterX, viewPortCenterY) {
-            
-            return function () {
-                
-                var stageX = -(app.player.x - viewPortCenterX),
-                    stageY = -(app.player.y - viewPortCenterY);
-                
-                app.stage.moveTo(stageX, stageY);
-                
-            };
-                        
-        }(app.viewport.cpu().centerX(), app.viewport.cpu().centerY()));
-                
     };
 
     /**

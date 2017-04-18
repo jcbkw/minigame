@@ -22,11 +22,11 @@
      */
     api.start = function () {
         
-        var zombie = new app.classes.game.characters.Enemy(this.stage, 75, 75, 32, 32);
+        var zombie = new app.classes.game.entities.characters.Enemy(75, 75, 32, 32);
         
         zombie.group.add('zombie', 'zombie4');
                         
-        zombie.render();
+        this.stage.addChild(zombie);
         
         zombie.pace().circle(40);
         
@@ -34,33 +34,33 @@
         
         
         
-        zombie = new app.classes.game.characters.Enemy(this.stage, 0, -32, 32, 32);
+        zombie = new app.classes.game.entities.characters.Enemy(0, -32, 32, 32);
         
         zombie.group.add('zombie', 'zombie1');
                         
-        zombie.render();
+        this.stage.addChild(zombie);
         
         zombie.pace().straight(100, true /*vertical*/);
                 
         this.characters.push(zombie);
         
         
-        zombie = new app.classes.game.characters.Enemy(this.stage, 100, 32, 32, 32);
+        zombie = new app.classes.game.entities.characters.Enemy(100, 32, 32, 32);
         
         zombie.group.add('zombie', 'zombie2');
                         
-        zombie.render();
+        this.stage.addChild(zombie);
         
         zombie.pace().straight(100, false /*vertical*/);
                 
         this.characters.push(zombie);
         
         
-        zombie = new app.classes.game.characters.Enemy(this.stage, 175, 175, 32, 32);
+        zombie = new app.classes.game.entities.characters.Enemy(175, 175, 32, 32);
         
         zombie.group.add('zombie', 'zombie3');
                         
-        zombie.render();
+        this.stage.addChild(zombie);
         
         zombie.pace().square(100);
                 

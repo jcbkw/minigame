@@ -2,24 +2,30 @@
 
 (function () {
      
+    var Super = app.classes.display.DisplayableContainer,
+        
+        /**
+         * @lends app.classes.display.DisplayClip.prototype
+         */
+        api = new Super;
+        
     /**
-     * Creates a DisplayObject that can cross from point to another
+     * Creates a DisplayableContainer that can cross from point to another
      * whithin its container.
      * 
      * @class
      * @name DisplayClip
      * @memberOf app.classes.display
      * 
-     * @param {DisplayObject} container
      * @param {Number} [x=0]
      * @param {Number} [y=0]
      * @param {Number} [width=0]
      * @param {Number} [height=0]
      */
-    function DisplayClip (container, x, y, width, height) {
+    function DisplayClip (x, y, width, height) {
         
         // call to super
-        app.classes.display.DisplayObject.call(this, container, x, y, width, height);
+        Super.call(this, x, y, width, height);
         
         this._uncross = null;
         
@@ -34,12 +40,6 @@
      * @memberOf app.classes.display.DisplayClip
      */
     DisplayClip.GROUP = 'displayclip';
-    
-    /**
-     * @type 
-     * @lends app.classes.display.DisplayClip.prototype
-     */
-    var api = new app.classes.display.DisplayObject;
     
     /**
      * @type {Function} constructor Constructor
@@ -116,27 +116,27 @@
             yLastStepSize   = yStepSize + yRemainder,
             yDone           = !y,
             
-            setStance;
+            setDirection;
             
         if (onDirection) {
             
-            setStance = function () {
+            setDirection = function () {
 
-                var stance = '';
+                var direction = '';
 
                 if (!xDone) {
 
-                    stance += xDirection;
+                    direction += xDirection;
 
                 }
 
                 if (!yDone) {
 
-                    stance += yDirection;
+                    direction += yDirection;
 
                 }
 
-                onDirection(stance);
+                onDirection(direction);
 
             };
             
@@ -160,7 +160,7 @@
                 }
                 else {
 
-                    setStance && setStance();
+                    setDirection && setDirection();
                     stop();
 
                 }
@@ -186,7 +186,7 @@
                 }
                 else {
 
-                    setStance && setStance();
+                    setDirection && setDirection();
                     stop();
 
                 }
@@ -207,7 +207,7 @@
 
                 app.unTick(stepper);
                 onStep && onStep(/*isLastCall*/true);
-                setStance && setStance();
+                setDirection && setDirection();
                 
                 that._uncross = stepper = stop = null;
                 
@@ -232,7 +232,7 @@
 
         };
 
-        setStance && setStance();            
+        setDirection && setDirection();            
         app.onTick(stepper);
         
     };
@@ -278,21 +278,57 @@
         this._uncross = null;
         
     };
+    
+    /**
+     * Makes the clip step in the provided direction.
+     * 
+     * @param {String} [x]          The desired direction on the X axis.
+     *                              Can be either left or right or a falsy value.
+     *                              
+     * @param {String} [y]          The desired direction on the Y axis.
+     *                              Can be either up or down or null.
+     *                              
+     * @param {Number} [stepSize]   Uses the instance's stepSize by default.
+     *                              If provided, always pass a positive Number.
+     */
+    api.steps = function (x, y, stepSize) {
+        
+        if (stepSize === void 0) {
+            
+            stepSize = this.stepSize;
+            
+        }
+        
+        this.move
+        (
+            x && (x === app.classes.geom.Direction.LEFT ? -stepSize : stepSize) || 0,
+            y && (y === app.classes.geom.Direction.UP ? -stepSize : stepSize) || 0
+        );
+        
+    };
 
     /**
      * Makes the clip step in the provided direction.
      * 
      * @param {String} direction    The desired direction. Can be either
      *                              up, down, left, right 
+     * @param {Number} [stepSize]   Uses the instance's stepSize by default.
+     *                              If provided, always pass a positive Number.
      */
-    api.step = function (direction) {
-
+    api.step = function (direction, stepSize) {
+        
+        if (stepSize === void 0) {
+            
+            stepSize = this.stepSize;
+            
+        }
+        
         switch (direction) {
-
-            case app.classes.geom.Direction.UP   : this.move(0, -this.stepSize); break;
-            case app.classes.geom.Direction.DOWN : this.move(0, this.stepSize);  break;
-            case app.classes.geom.Direction.LEFT : this.move(-this.stepSize);    break;
-            case app.classes.geom.Direction.RIGHT: this.move(this.stepSize);     break;
+            
+            case app.classes.geom.Direction.UP   : this.move(0, -stepSize); break;
+            case app.classes.geom.Direction.DOWN : this.move(0, stepSize);  break;
+            case app.classes.geom.Direction.LEFT : this.move(-stepSize);    break;
+            case app.classes.geom.Direction.RIGHT: this.move(stepSize);     break;
 
         }  
 

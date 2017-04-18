@@ -1,0 +1,61 @@
+.enemy.zombie1[direction=left],
+.enemy.zombie1[direction=leftup],
+.enemy.zombie1[direction=leftdown] {
+
+    animation-name: enemyzombie1walkleft;
+    background-position: 0px -32px;
+
+}
+
+@keyframes enemyzombie1walkleft {
+
+    from { background-position:   0px -32px; }
+      to { background-position: -96px -32px; }
+
+}
+
+.enemy.zombie1[direction=right],
+.enemy.zombie1[direction=rightup],
+.enemy.zombie1[direction=rightdown] {
+
+    animation-name: enemyzombie1walkright;
+    background-position: 0px -64px
+
+}
+
+@keyframes enemyzombie1walkright {
+
+    from { background-position:   0px -64px; }
+      to { background-position: -96px -64px; }
+
+}
+
+.enemy.zombie1[direction=up] {
+
+    animation-name: enemyzombie1walkup;
+    background-position: 0px -96px;
+
+}
+
+@keyframes enemyzombie1walkup {
+
+    from { background-position:   0px -96px; }
+      to { background-position: -96px -96px; }
+   
+
+}
+
+.enemy.zombie1,
+.enemy.zombie1[direction=down] {
+
+    animation-name: enemyzombie1walkdown;
+    background-position-x: 0px;
+
+}
+
+@keyframes enemyzombie1walkdown {
+
+    from { background-position-x:   0px; }
+      to { background-position-x: -96px; }
+
+}

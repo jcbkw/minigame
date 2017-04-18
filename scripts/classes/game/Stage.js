@@ -15,18 +15,15 @@
     /**
      * @class Stage The main DisplayClip of the application
      * 
-     * @param {app.classes.game.Viewport} viewport
      * @param {Number} [x=0]
      * @param {Number} [y=0]
      * @param {Number} [width=0]
      * @param {Number} [height=0]
      */
-    function Stage (viewport, x, y, width, height) {
+    function Stage (x, y, width, height) {
         
         // call to super
-        Super.call(this, viewport, x, y, width, height);
-        
-        this.viewport = viewport;
+        Super.call(this, x, y, width, height);
         
         this.group.add(Stage.GROUP);
         
@@ -48,11 +45,6 @@
     api.constructor = Stage;
     
     /**
-     * @type {app.classes.game.Viewport}
-     */
-    api.viewport = null;
-    
-    /**
      * Restricts the Stage's panning to its viewport.
      * The <code>outside</code> parameter has no effect.
      * 
@@ -60,12 +52,14 @@
      */
     api.boundToContainer = function (outside) {
         
+        var container = this.getContainer();
+        
         this.setBounds(new app.classes.geom.RectangularBounds(
 
-            /*top*/     -(this.height - this.viewport.width),
+            /*top*/     -(this.height - container.height),
             /*right*/   0,
             /*bottom*/  0,
-            /*left*/    -(this.width - this.viewport.width)
+            /*left*/    -(this.width - container.width)
 
         ));
         

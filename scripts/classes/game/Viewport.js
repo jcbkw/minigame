@@ -3,9 +3,9 @@
 (function () {
     
     /**
-     * @type app.classes.display.DisplayBase
+     * @type app.classes.display.DisplayableContainer
      */
-    var Super = app.classes.display.DisplayBase,
+    var Super = app.classes.display.DisplayableContainer,
     
         /**
          * @lends app.classes.display.Viewport.prototype
@@ -13,7 +13,7 @@
         api = new Super;
     
     /**
-     * @class Viewport The main DisplayBase of the application
+     * @class Viewport The main Displayable of the application
      * 
      * @param {Element} parentElement
      * @param {Number} [width=0]
@@ -22,7 +22,9 @@
     function Viewport (parentElement, width, height) {
         
         // call to super
-        Super.call(this, createContainer(parentElement), 0, 0, width, height);
+        Super.call(this, 0, 0, width, height);
+        
+        addToElement(this, parentElement);
         
         this.group.add(Viewport.GROUP);
         
@@ -54,15 +56,19 @@
      * 
      * @private
      * 
+     * @param {app.classes.game.Viewport} viewport
      * @param {Element} element
-     * @returns {app.classes.display.DisplayBase}
+     * 
+     * @returns {app.classes.display.Displayable}
      */
-    function createContainer (element) {
+    function addToElement (viewport, element) {
         
         var container = new Super(null);
         
         container.element = 
         container.innerElement = element;
+        
+        container.addChild(viewport);
         
         return container;
         

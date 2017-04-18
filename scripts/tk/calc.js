@@ -61,6 +61,30 @@
             
             return (isNumber * 100) / ofNumber;
             
+        },
+        
+        /**
+         * Converts the given degree to radian
+         * 
+         * @param {Number} degree
+         * @returns {Number}
+         */
+        toRadians: function (degree) {
+            
+            return degree * (Math.PI / 180);
+            
+        },
+
+        /**
+         * Converts the given radian to degree
+         * 
+         * @param {Number} radians
+         * @returns {Number}
+         */
+        toDegree: function (radians) {
+            
+            return radians * (180 / Math.PI);
+            
         }
         
     };
