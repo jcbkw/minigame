@@ -123,19 +123,19 @@
             setDirection = function () {
 
                 var direction = '';
-
-                if (!xDone) {
-
-                    direction += xDirection;
-
-                }
-
+                
                 if (!yDone) {
 
                     direction += yDirection;
 
                 }
 
+                if (!xDone) {
+
+                    direction += xDirection;
+
+                }
+                
                 onDirection(direction);
 
             };

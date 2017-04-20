@@ -48,17 +48,19 @@
     api.attack =  function () {
         
         var bullet,
-            user;
+            attacker;
 
         if (this.ammo > 0) {
             
-            user = this.getUser();
+            attacker = this.getAttacker();
             
-            if (user) {
+            if (attacker) {
                 
-                bullet = new app.classes.game.entities.bullets.player.TinyBullet(this);
+                // todo, quick and dirty, the gun should not
+                // decide which bullet to use
+                bullet = new app.classes.game.entities.bullets.TinyBullet(this);
                 
-                user.getContainer().addChild(bullet);
+                attacker.getContainer().addChild(bullet);
                 bullet.fire();
 
                 this.ammo--;
@@ -67,7 +69,7 @@
 
         }
         
-        bullet = user = null;
+        bullet = attacker = null;
 
     };
     

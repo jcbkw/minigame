@@ -12,12 +12,12 @@
     /**
      * @class A base ExCalibur class.
      * 
-     * @param {app.player} user 
+     * @param {app.player} attacker 
      */
-    function ExCalibur (user) {
+    function ExCalibur (attacker) {
         
         // calling super
-        Super.call(this, user);
+        Super.call(this, attacker);
         this.group.add(ExCalibur.GROUP);
         
         this.ammo = Number.POSITIVE_INFINITY;
@@ -51,7 +51,7 @@
             that.drawn = true;
             
             this.setSize(21, 35);            
-            this.user.addChild(this);
+            this.attacker.addChild(this);
             
             setTimeout(function () {
                 

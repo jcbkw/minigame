@@ -49,13 +49,13 @@
         
         if (this.weapon) {
             
-            this.weapon.setUser(null);
+            this.weapon.setAttacker(null);
             
         }
         
         if (weapon) {
             
-            weapon.setUser(this);
+            weapon.setAttacker(this);
             
         }
         

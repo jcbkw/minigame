@@ -121,20 +121,71 @@
         app.ai = new app.classes.game.ai.ZombieRaid(app.stage);
         app.ai.start();
         
+        
+        
+        /**************************/
         var boundary = new app.classes.game.entities.volumes.Boundary(40, 412, 70, 245);
-        
         app.stage.addChild(boundary);
-        
         boundary.element.style.background = 'rgba(255,0,0,.5)';
+        /**************************/
         
+        
+        
+        /**************************/
         var box = new app.classes.game.entities.volumes.Box(40, 250);
-        
         app.stage.addChild(box);
         box.boundToContainer();
+        /**************************/
+        
+        
+        
+        /**************************/
+        var dustX = 280,
+            dustY = 280,
+            dustWidth = 40,
+            dustHeight = 40,
+            dustCols = 6,
+            dustRows = 3,
+            dust,
+            i,
+            j;
+    
+        for (i = 0; i < dustRows; i += 1) {
+            
+            for (j = 0; j < dustCols; j += 1) {
+                
+                dust = new app.classes.game.entities.volumes.Dust(dustX + j * dustWidth, dustY);
+
+                app.stage.addChild(dust);
+
+            }
+            
+            dustY  += dustHeight;
+            
+        }
+        /**************************/
+        
             
         // start ticking
         requestAnimationFrame(tick);
         
+        
+        /* 
+        var fps = 0;
+        
+        app.onTick(function () {
+            
+            ++fps;
+            
+        });
+        
+        setInterval(function () {
+            
+            console.log(fps, 'fps');
+            fps = 0;
+            
+        }, 1000);
+        */
     };
 
     /**

@@ -3,9 +3,9 @@
 (function () {
     
     /**
-     * @type app.classes.game.entities.base.PlayerBullet
+     * @type app.classes.game.entities.base.Bullet
      */
-    var Super = app.classes.game.entities.base.PlayerBullet,
+    var Super = app.classes.game.entities.base.Bullet,
     
         /**
          * @lends app.classes.game.entities.weapons.TinyBullet.prototype
@@ -52,6 +52,6 @@
     
     TinyBullet.prototype = api;
     
-    ns.set('app.classes.game.entities.bullets.player.TinyBullet', TinyBullet);
+    ns.set('app.classes.game.entities.bullets.TinyBullet', TinyBullet);
 
 })();

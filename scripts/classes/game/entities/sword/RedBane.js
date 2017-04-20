@@ -12,12 +12,12 @@
     /**
      * @class A base RedBane class.
      * 
-     * @param {app.player} user 
+     * @param {app.player} attacker 
      */
-    function RedBane (user) {
+    function RedBane (attacker) {
         
         // calling super
-        Super.call(this, user);
+        Super.call(this, attacker);
         this.group.add(RedBane.GROUP);
         
         this.ammo = Number.POSITIVE_INFINITY;
@@ -51,7 +51,7 @@
             that.drawn = true;
             
             this.setSize(48, 24);
-            this.user.addChild(this);
+            this.attacker.addChild(this);
             
             function clear () {
                 

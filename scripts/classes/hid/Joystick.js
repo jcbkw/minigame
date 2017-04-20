@@ -52,7 +52,7 @@
         
     /**
      * Contains the directional buttons
-     * currently pressed by the en user.
+     * currently pressed by the end user.
      * 
      * @type String[]
      */

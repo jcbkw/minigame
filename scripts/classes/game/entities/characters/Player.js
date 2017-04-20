@@ -81,9 +81,14 @@
      */
     api.isCollidableWith = function (entity) {
         
+        // super says yes
         if (Super.prototype.isCollidableWith.call(this, entity)) {
             
-            return !(entity instanceof app.classes.game.entities.base.PlayerBullet);
+            // allow if either no a weapon
+            return !(entity instanceof app.classes.game.entities.base.Weaponry)
+                
+                // or a weapo not handled by the player
+                || !entity.isOnPlayerSide();
             
         }
         
@@ -193,34 +198,34 @@
         var result;
         
         // check for diagonals
-        if (directions.indexOf(app.classes.geom.Direction.LEFT) !== -1) {
+        if (directions.indexOf(app.classes.geom.Direction.UP) !== -1) {
 
-            if (directions.indexOf(app.classes.geom.Direction.UP) !== -1) {
+            if (directions.indexOf(app.classes.geom.Direction.LEFT) !== -1) {
 
-                // diagonal leftup
-                result = app.classes.geom.Direction.LEFT + app.classes.geom.Direction.UP;
+                // diagonal upleft
+                result = app.classes.geom.Direction.DIAG_UPLEFT;
 
             }
-            else if (directions.indexOf(app.classes.geom.Direction.DOWN) !== -1) {
+            else if (directions.indexOf(app.classes.geom.Direction.RIGHT) !== -1) {
 
-                // diagonal leftdown
-                result = app.classes.geom.Direction.LEFT + app.classes.geom.Direction.DOWN;
+                // diagonal upright
+                result = app.classes.geom.Direction.DIAG_UPRIGHT;
 
             }
 
         }
-        else if (directions.indexOf(app.classes.geom.Direction.RIGHT) !== -1) {
+        else if (directions.indexOf(app.classes.geom.Direction.DOWN) !== -1) {
 
-            if (directions.indexOf(app.classes.geom.Direction.UP) !== -1) {
+            if (directions.indexOf(app.classes.geom.Direction.LEFT) !== -1) {
 
-                // diagonal rightup
-                result = app.classes.geom.Direction.RIGHT + app.classes.geom.Direction.UP;
+                // diagonal downleft
+                result = app.classes.geom.Direction.DIAG_DOWNLEFT;
 
             }
-            else if (directions.indexOf(app.classes.geom.Direction.DOWN) !== -1) {
+            else if (directions.indexOf(app.classes.geom.Direction.RIGHT) !== -1) {
 
-                // diagonal rightdown
-                result = app.classes.geom.Direction.RIGHT + app.classes.geom.Direction.DOWN;
+                // diagonal downright
+                result = app.classes.geom.Direction.DIAG_DOWNRIGHT;
 
             }
 

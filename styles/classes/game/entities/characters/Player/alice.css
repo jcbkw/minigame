@@ -33,30 +33,30 @@
 
 }
 
-.player.alice[direction=leftup] {
+.player.alice[direction=upleft] {
 
-    animation-name: playeralicewalkleftup;
+    animation-name: playeralicewalkupleft;
     background-position: -96px -32px;
 
 }
 
-.player.alice[direction=leftdown] {
+.player.alice[direction=downleft] {
 
-    animation-name: playeralicewalkleftdown;
+    animation-name: playeralicewalkdownleft;
     background-position: -96px 0px;
 
 }
 
-.player.alice[direction=rightup] {
+.player.alice[direction=upright] {
 
-    animation-name: playeralicewalkrightup;
+    animation-name: playeralicewalkupright;
     background-position: -96px -96px;
 
 }
 
-.player.alice[direction=rightdown] {
+.player.alice[direction=downright] {
 
-    animation-name: playeralicewalkrightdown;
+    animation-name: playeralicewalkdownright;
     background-position: -96px -64px;
 
 }
@@ -90,28 +90,28 @@
 
 }
 
-@keyframes playeralicewalkleftup {
+@keyframes playeralicewalkupleft {
 
    from { background-position: -96px  -32px; }
      to { background-position: -192px -32px; }
 
 }
 
-@keyframes playeralicewalkleftdown {
+@keyframes playeralicewalkdownleft {
 
    from { background-position: -96px  0px; }
      to { background-position: -192px 0px; }
 
 }
 
-@keyframes playeralicewalkrightup {
+@keyframes playeralicewalkupright {
 
    from { background-position:  -96px -96px; }
      to { background-position: -192px -96px; }
 
 }
 
-@keyframes playeralicewalkrightdown {
+@keyframes playeralicewalkdownright {
 
    from { background-position:  -96px -64px; }
      to { background-position: -192px -64px; }

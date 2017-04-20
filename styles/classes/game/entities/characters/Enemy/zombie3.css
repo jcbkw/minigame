@@ -1,6 +1,6 @@
 .enemy.zombie3[direction=left],
-.enemy.zombie3[direction=leftup],
-.enemy.zombie3[direction=leftdown] {
+.enemy.zombie3[direction=upleft],
+.enemy.zombie3[direction=downleft] {
 
     animation-name: enemyzombie3walkleft;
     background-position: 0px -32px;
@@ -15,8 +15,8 @@
 }
 
 .enemy.zombie3[direction=right],
-.enemy.zombie3[direction=rightup],
-.enemy.zombie3[direction=rightdown] {
+.enemy.zombie3[direction=upright],
+.enemy.zombie3[direction=downright] {
 
     animation-name: enemyzombie3walkright;
     background-position: -96px -64px

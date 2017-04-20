@@ -52,6 +52,30 @@
     api.constructor = Enemy;
     
     /**
+     * Tells whether this entity can be collided
+     * with the provided entity;
+     * 
+     * @param {app.classes.game.entities.base.Entity} entity
+     * @returns {Boolean}
+     */
+    api.isCollidableWith = function (entity) {
+        
+        // super says yes
+        if (Super.prototype.isCollidableWith.call(this, entity)) {
+            
+            // allow if either no a weapon
+            return !(entity instanceof app.classes.game.entities.base.Weaponry)
+                
+                // or a weapon handled by the player
+                || entity.isOnPlayerSide();
+            
+        }
+        
+        return false;
+        
+    };
+    
+    /**
      * Handles the collision of this entity with another
      * 
      * @param {app.classes.game.entities.base.Entity} entity

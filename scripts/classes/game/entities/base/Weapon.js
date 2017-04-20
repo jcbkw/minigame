@@ -1,16 +1,23 @@
 /* global app, ns */
 
 (function () {
-        
-    var Super = app.classes.game.entities.base.Insentient,
     
+    /**
+     * @type app.classes.game.entities.base.Weaponry
+     */
+    var Super = app.classes.game.entities.base.Weaponry,
+        
         /**
          * @lends app.classes.game.entities.base.Weapon.prototype
          */
         api = new Super;
 
     /**
-     * @class Weapon The base Weapon class.
+     * The base, abstract Weapon class.
+     * Extenders must implement the 
+     * <code>attachk</code> function.
+     * 
+     * @class
      * 
      * @param {Number} [x=0]
      * @param {Number} [y=0]
@@ -22,19 +29,9 @@
         // call to super
         Super.call(this, x, y, width, height);
         
-        this.user = null;
+        this.attacker = null;
         
     }
-    
-    /**
-     * The display object's group.
-     * 
-     * @static
-     * @name GROUP
-     * @type String
-     * @memberOf app.classes.game.entities.base.Weapon
-     */
-    Weapon.GROUP = 'weapon';
     
     /**
      * @property {Function} constructor Constructor
@@ -42,34 +39,41 @@
     api.constructor = Weapon;
     
     /**
-     * @property {app.classes.game.entities.characters.Attacker} user The Weapons user
+     * @property {app.classes.game.entities.characters.Attacker} attacker The Weapons attacker
      */
-    api.user = null;
+    api.attacker = null;
     
     /**
      * Executes an attack with the current weapon.
+     * @type Function
      */
-    api.attack = function () {};
+    api.attack = null;
 
     /**
-     * Returns the user whom this weapon is assigned to.
+     * Returns the attacker whom this weapon is assigned to.
      * 
      * @return {app.classes.game.entities.characters.Attacker}
      */
-    api.getUser = function () {
+    api.getAttacker = function () {
 
-        return this.user;
+        return this.attacker;
 
     };
     
     /**
-     * Sets the user whom this weapon is assigned to.
+     * Sets the attacker whom this weapon is assigned to.
      * 
-     * @param {app.classes.game.entities.characters.Attacker} user 
+     * @param {app.classes.game.entities.characters.Attacker} attacker 
      */
-    api.setUser = function (user) {
-
-        this.user = user;
+    api.setAttacker = function (attacker) {
+        
+        this.attacker = attacker;
+        
+        this.setOnPlayerSide(
+            
+            this.attacker instanceof app.classes.game.entities.characters.Player
+            
+        );
 
     };
     

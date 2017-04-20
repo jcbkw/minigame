@@ -41,25 +41,25 @@
    
 }
 
-.player[direction=leftup] .redbane {
+.player[direction=upleft] .redbane {
     
     -webkit-transform: translate(-12px, -7px) rotate(135deg);
    
 }
 
-.player[direction=leftdown] .redbane {
+.player[direction=downleft] .redbane {
     
     -webkit-transform: translate(-15px, 15px) rotate(45deg);
    
 }
 
-.player[direction=rightup] .redbane {
+.player[direction=upright] .redbane {
     
     -webkit-transform: translate(5px, -5px) rotate(225deg);
    
 }
 
-.player[direction=rightdown] .redbane {
+.player[direction=downright] .redbane {
     
     -webkit-transform: translate(0px, 15px) rotate(315deg);
    

@@ -3,9 +3,9 @@
 (function () {
     
     /**
-     * @type app.classes.game.entities.base.Insentient
+     * @type app.classes.game.entities.base.Weaponry
      */
-    var Super = app.classes.game.entities.base.Insentient,
+    var Super = app.classes.game.entities.base.Weaponry,
     
         /**
          * @lends app.classes.game.entities.base.Bullet.prototype
@@ -27,6 +27,8 @@
      */
     function Bullet (weapon, angle, speed, x, y, width, height) {
         
+        var attacker;
+        
         // call to super
         Super.call(this, x, y, width, height);
         
@@ -36,7 +38,28 @@
         this.angle          = angle || 0;
         this.speed          = speed || 0;
         
+        attacker            = this.weapon && this.weapon.getAttacker();
+        
+        if (attacker) {
+            
+            this.setOnPlayerSide(
+
+                attacker instanceof app.classes.game.entities.characters.Player
+
+            );
+            
+        }
+        
     }
+    
+    /**
+     * This value defines whether bullets can
+     * hit other bullets.
+     * 
+     * @static
+     * @type Boolean
+     */
+    Bullet.CAN_HIT_BULLET = false;
     
     /**
      * @property {Function} constructor Constructor
@@ -51,9 +74,41 @@
      * @returns {Boolean}
      */
     api.isCollidableWith = function (entity) {
+        
+        var onPlayerSide;
+        
+        // if super says yes, then say NO if and only if
+        if (Super.prototype.isCollidableWith.call(this, entity)) {
+            
+            // bullets cannot hit bullet and the other entity is a bullet
+            if (!Bullet.CAN_HIT_BULLET && entity instanceof Bullet) {
                 
-        return     Super.prototype.isCollidableWith.call(this, entity)
-               && !(entity instanceof Bullet);
+                return false;
+                
+            }
+            
+            onPlayerSide = this.isOnPlayerSide();
+            
+            if (
+                   // this is on the player side and the other entity is a player
+                   ( onPlayerSide && entity instanceof app.classes.game.entities.characters.Player)
+                   
+                   // this is NOTon the player side and the other entity is an Enemy
+                || (!onPlayerSide && entity instanceof app.classes.game.entities.characters.Enemy)
+                
+            ) {
+                
+                return false;
+                
+            }
+            
+            // otherwise say yes
+            return true;
+            
+        }
+        
+        // super says no, so sol
+        return false;
         
     };
 
@@ -62,14 +117,14 @@
      */
     api.fire = function () {
         
-        var attacker    = this.weapon.getUser(),
+        var attacker    = this.weapon.getAttacker(),
             direction   = attacker.getDirection();
             
-        if (direction) {
+        if (direction && attacker) {
             
             this.setDirection(direction);
             
-            direction   = new app.classes.geom.Direction(direction);
+            direction   = (new app.classes.geom.Direction(direction)).disambiguate();
             
             this.speed  = this.speed + attacker.stepSize;
 

@@ -62,18 +62,6 @@
     };
     
     /**
-     * Tells whether this entity should be consider dangerous
-     * (e.g. has a negative life point).
-     * 
-     * @returns {Boolean}
-     */
-    api.isHarmful = function () {
-        
-        return this.lifeImpact < 0;
-        
-    };
-    
-    /**
      * Handle the collision of this entity with another
      * 
      * @param {app.classes.game.entities.base.Entity} entity
@@ -110,6 +98,45 @@
     api.setLifeImpact = function (value) {
         
         this.lifeImpact = value;
+        
+    };
+    
+    /**
+     * Tells whether this entity should be considered harmful
+     * (e.g. may potentially have a negative impact on another
+     * entity's life).
+     * 
+     * @returns {Boolean}
+     */
+    api.hasNegativeLifeImpact = function () {
+        
+        return this.lifeImpact < 0;
+        
+    };
+    
+    /**
+     * Tells whether this entity should be considered helpful
+     * (e.g. may potentially have a positive impact on another
+     * entity's life).
+     * 
+     * @returns {Boolean}
+     */
+    api.hasPositiveLifeImpact = function () {
+        
+        return this.lifeImpact > 0;
+        
+    };
+    
+    
+    /**
+     * Tells whether this entity should be considered neutral
+     * (e.g. has no impact on another entity's life).
+     * 
+     * @returns {Boolean}
+     */
+    api.hasNoLifeImpact = function () {
+        
+        return this.lifeImpact === 0;
         
     };
     

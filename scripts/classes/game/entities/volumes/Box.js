@@ -26,8 +26,9 @@
         Super.call(this, x, y, 40, 40);
         
         // todo no no no!!!
-        this.element.style.background = '#fbab18';
+        this.element.style.background = '#60290c';
         this.element.style.border = '2px solid black';
+        this.element.style.boxSizing = 'border-box';
         
     }
     
